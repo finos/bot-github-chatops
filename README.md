@@ -15,19 +15,6 @@ repositories](https://github.com/symphonyoss) via CLI-esque interactions with th
 
 Follow our progress towards an MVP [here](https://github.com/symphonyoss/bot-github-chatops/projects/1)!
 
-## MVP Requirements
-
- 1. Read issues / PRs - list (with some canned filtering restrictions e.g. "new", "open"), view details, etc.
- 2. Comment on issue / PR
- 3. Create issue
-
-## Proposed Technologies
-
- * **Platform:** JVM, with Clojure as the language ([existing](https://github.com/symphonyoss/bot-unfurl) [bots](https://github.com/pmonks/bot-clj),
-   [Symphony REST API binding](https://github.com/symphonyoss/clj-symphony), [GitHub API binding](https://github.com/irresponsible/tentacles/))
- * **Hosting infrastructure:** The Foundation's [OpenShift Online](https://www.openshift.com/features/index.html) instance
- * **Symphony pod:** [Foundation production pod](https://foundation.symphony.com/)
-
 ## Developer Information
 
 [GitHub project](https://github.com/symphonyoss/bot-github-chatops)
