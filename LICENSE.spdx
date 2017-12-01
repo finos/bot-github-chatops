@@ -1,0 +1,7 @@
+SPDXVersion: SPDX-2.0
+DataLicense: CC0-1.0
+Creator: Symphony Software Foundation
+PackageName: bot-github-chatops
+PackageOriginator: Symphony Software Foundation
+PackageHomePage: https://github.com/symphonyoss/bot-github-chatops
+PackageLicenseDeclared: Apache-2.0
