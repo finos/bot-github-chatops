@@ -13,8 +13,7 @@ repositories](https://github.com/symphonyoss) via CLI-esque interactions with th
 
 ## Current Status
 
-The idea was approved for hosting by the Foundation on 2017-11-30, so little to no progress has been made yet.  Stay
-tuned!
+Follow our progress towards an MVP [here](https://github.com/symphonyoss/bot-github-chatops/projects/1)!
 
 ## MVP Requirements
 
