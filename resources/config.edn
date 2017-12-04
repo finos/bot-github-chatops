@@ -1,0 +1,26 @@
+; Default configuration file - can be overridden via -c command line option
+{
+  :symphony-coords {
+    :session-auth-url #env SESSIONAUTH_URL
+    :key-auth-url     #env KEYAUTH_URL
+    :agent-api-url    #env AGENT_URL
+    :pod-api-url      #env POD_URL
+
+    :trust-store [#env TRUSTSTORE_FILE    #env TRUSTSTORE_PASSWORD]
+    :user-cert   [#env BOT_USER_CERT_FILE #env BOT_USER_CERT_PASSWORD]
+
+    :user-email  #env BOT_USER_EMAIL
+  }
+
+  ; For details, see https://github.com/rhuss/jolokia/blob/master/agent/jvm/src/main/resources/default-jolokia-agent.properties
+  ; Note: All keys and values MUST be strings - this is a Jolokia requirement
+  :jolokia-config {
+    "host" #or [#env JOLOKIA_HOST "localhost"]
+    "port" #or [#env JOLOKIA_PORT "8778"]
+  }
+
+  ; The interval (in minutes) for checking and accepting new connection requests
+  :accept-connections-interval #long #or [#env ACCEPT_CONNECTIONS_INTERVAL 30]
+
+  :admin-emails #split [#env ADMIN_EMAILS "\\s*,\\s*"]
+}
