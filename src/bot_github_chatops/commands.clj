@@ -28,27 +28,31 @@
             [clj-symphony.stream           :as sys]
             [bot-github-chatops.utils      :as u]
             [bot-github-chatops.config     :as cfg]
-            [bot-github-chatops.connection :as cnxn]))
+            [bot-github-chatops.connection :as cnxn]
+            [bot-github-chatops.template   :as tem]))
 
 (defn- status!
   "Provides status information about the bot."
   [stream-id _]
-  (let [now           (tm/now)
-        uptime        (tm/interval cfg/boot-time now)
-        last-reload   (tm/interval cfg/last-reload-time now)
-        allocated-ram (.totalMemory (java.lang.Runtime/getRuntime))
-        message       (str "<messageML>"
-                           "<b>GitHub ChatOps bot status as at " (u/date-as-string now) ":</b>"
-                           "<p><table>"
-                           "<tr><td><b>Symphony pod</b></td><td>" (:company cnxn/bot-user) " v" cnxn/symphony-version "</td></tr>"
-                           "<tr><td><b>Runtime</b></td><td>Clojure v" (clojure-version) " on JVM v" (System/getProperty "java.version") " (" (System/getProperty "os.arch") ")</td></tr>"
-                           "<tr><td><b>Bot build</b></td><td><a href=\"" cfg/git-url "\">git revision " cfg/git-revision "</a>, built " (u/date-as-string cfg/build-date) "</td></tr>"
-                           "<tr><td><b>Bot uptime</b></td><td>" (u/interval-to-string uptime) "</td></tr>"
-                           "<tr><td><b>Time since last configuration reload</b></td><td>" (u/interval-to-string last-reload) "</td></tr>"
-                           "<tr><td><b>Memory allocated</b></td><td>" (u/size-to-string allocated-ram) "</td></tr>"
-                           "</table></p>"
-                           "</messageML>")]
-    (sym/send-message! cnxn/symphony-connection stream-id message)))
+  (let [now (tm/now)]
+    (sym/send-message! cnxn/symphony-connection
+                       stream-id
+                       (tem/render "status.ftl"
+                                   {
+                                     ; We have to use camelCase here since Freemarker doesn't support hyphens in symbols
+                                     :now              (u/date-as-string now)
+                                     :podName          (:company cnxn/bot-user)
+                                     :podVersion       cnxn/symphony-version
+                                     :clojureVersion   (clojure-version)
+                                     :javaVersion      (System/getProperty "java.version")
+                                     :javaArchitecture (System/getProperty "os.arch")
+                                     :gitUrl           cfg/git-url
+                                     :gitRevision      cfg/git-revision
+                                     :buildDate        (u/date-as-string cfg/build-date)
+                                     :botUptime        (u/interval-to-string (tm/interval cfg/boot-time now))
+                                     :lastReloadTime   (u/interval-to-string (tm/interval cfg/last-reload-time now))
+                                     :allocatedRam     (u/size-to-string (.totalMemory (java.lang.Runtime/getRuntime)))
+                                   }))))
 
 (defn- config!
   "Provides the current configuration of the bot."

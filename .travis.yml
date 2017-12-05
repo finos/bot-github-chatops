@@ -1,0 +1,31 @@
+sudo: false
+language: clojure
+lein: 2.8.1
+jdk:
+  - oraclejdk8
+  - oraclejdk9
+
+#env:
+#  global:
+#    # Encrypted OC_TOKEN for deploying to OpenShift
+#    - secure: ""
+#    # Encrypted WHITESOURCE_TOKEN for updating Whitesource licensing information
+#    - secure: ""
+
+script: lein do git-info-edn, check
+
+#deploy:
+#  # Deploy binaries to OpenShift
+#  - provider: script
+#    skip_cleanup: true
+#    script: lein do git-info-edn, uberjar && mkdir -p target/oc && cp target/*-standalone.jar target/oc/ && ./deploy-to-openshift.sh $TRAVIS_BRANCH $TRAVIS_PULL_REQUEST
+#    on:
+#      all_branches: true
+#      jdk: oraclejdk8
+#  # Update Whitesource
+#  - provider: script
+#    skip_cleanup: true
+#    script: lein pom && mvn org.whitesource:whitesource\-maven\-plugin:3.3.1:update -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN -Dorg.whitesource.ignoredScopes=test,runtime,provided,system
+#    on:
+#      branch: master
+#      jdk: oraclejdk8
