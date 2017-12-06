@@ -44,6 +44,7 @@
                       [org.jolokia/jolokia-jvm               "1.3.7" :classifier "agent"]
                       [clj-time                              "0.14.2"]
                       [com.github.grinnbearit/freemarker-clj "-SNAPSHOT"]
+                      [irresponsible/tentacles               "0.6.1"]
                       [org.symphonyoss/clj-symphony          "0.3.0-SNAPSHOT" :exclusions [org.clojure/clojure
                                                                                       org.slf4j/slf4j-log4j12]]
 
@@ -56,6 +57,7 @@
                       [com.fasterxml.jackson.dataformat/jackson-dataformat-smile    ~jackson-version]
                       [com.fasterxml.jackson.datatype/jackson-datatype-jsr310       ~jackson-version]
                       [com.fasterxml.jackson.module/jackson-module-jaxb-annotations ~jackson-version]
+                      [clj-http                                                     "3.7.0"]
                       [joda-time/joda-time                                          "2.9.9"]
                       [org.hamcrest/hamcrest-core                                   "1.3"]
                     ]

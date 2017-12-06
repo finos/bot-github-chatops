@@ -16,21 +16,22 @@
 ;
 
 (ns bot-github-chatops.core
-  (:require [clojure.string                :as s]
-            [clojure.tools.logging         :as log]
-            [mount.core                    :as mnt :refer [defstate]]
-            [clj-symphony.stream           :as sys]
-            [clj-symphony.message          :as sym]
-            [bot-github-chatops.connection :as cnxn]
-            [bot-github-chatops.commands   :as cmd]))
+  (:require [clojure.string                    :as s]
+            [clojure.tools.logging             :as log]
+            [mount.core                        :as mnt :refer [defstate]]
+            [clj-symphony.stream               :as sys]
+            [clj-symphony.message              :as sym]
+            [bot-github-chatops.connection     :as cnxn]
+            [bot-github-chatops.commands       :as cmd]
+            [bot-github-chatops.admin-commands :as adm]))
 
 (defn- process-message!
   "Processes all messages received by the bot."
   [{:keys [message-id timestamp stream-id user-id type text entity-data]}]
   (try
     (log/debug "Received message" message-id "from user" user-id "in stream" stream-id ":" text)
-    ; ####TODO: IMPLEMENT BOT!!!!
     (cmd/process-commands! user-id stream-id text entity-data)
+    (adm/process-commands! user-id stream-id text entity-data)
     (catch Exception e
       (log/error e "Unexpected exception while processing message" message-id))))
 

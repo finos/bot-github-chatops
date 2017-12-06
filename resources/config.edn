@@ -12,6 +12,16 @@
     :user-email  #env BOT_USER_EMAIL
   }
 
+  :github-coords {
+    ; Only one of these needs to be provided - if both are provided, only :token will be used
+    :token              #env GITHUB_TOKEN
+    :login              [#env GITHUB_USERNAME #env GITHUB_PASSWORD]
+
+    :org                #or [#env GITHUB_ORG "symphonyoss"]
+    :mask-private-repos #boolean #or [#env MASK_PRIVATE_REPOS true]   ; Should the tool mask private repos it has access to?
+    :masked-repos       #split [#env MASKED_REPOS "\\s*,\\s*"]        ; Other named repos the tool should mask (may be private or public)
+  }
+
   ; For details, see https://github.com/rhuss/jolokia/blob/master/agent/jvm/src/main/resources/default-jolokia-agent.properties
   ; Note: All keys and values MUST be strings - this is a Jolokia requirement
   :jolokia-config {
