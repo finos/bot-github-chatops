@@ -42,13 +42,25 @@
                        (tem/render "list-repos.ftl"
                                    { :repos (map #(vector % (gh/repo-url %)) repos) }))))
 
+(defn- list-issues!
+  "Lists the issues for the given repository (which must be supplied immediately after the command name)."
+  [stream-id plain-text]
+  (let [repo-name (second (s/split plain-text #"\s+"))
+        issues    (gh/issues repo-name)]
+    (sym/send-message! cnxn/symphony-connection
+                       stream-id
+                       (tem/render "list-issues.ftl"
+                                   { :repoName repo-name
+                                     :issues   issues } ))))
+
 (declare help!)
 
 ; Table of commands - each of these must be a function of 2 args (strean-id, plain-text-of-message)
 (def ^:private commands
   {
-    "list-repos" #'list-repos!
-    "help"       #'help!
+    "list-repos"  #'list-repos!
+    "list-issues" #'list-issues!
+    "help"        #'help!
   })
 
 (defn- help!

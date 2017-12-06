@@ -21,6 +21,7 @@
             [tentacles.repos           :as tr]
             [tentacles.orgs            :as to]
             [tentacles.users           :as tu]
+            [tentacles.issues          :as ti]
             [bot-github-chatops.config :as cfg]))
 
 (defstate github-config
@@ -58,3 +59,9 @@
   "Returns the URL of the given repository."
   [repo-name]
   (str "https://github.com/" org "/" repo-name))
+
+
+(defn issues
+  "Lists the issues in the given repo."
+  [repo-name]
+  (ti/issues org repo-name))

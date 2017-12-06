@@ -59,12 +59,16 @@
                        result (assoc-in  result
                                          [:symphony-coords :user-cert]
                                          [(first (:user-cert (:symphony-coords result))) "REDACTED"])
-                       result (assoc-in  result
-                                         [:github-coords :login]
-                                         [(first (:login (:github-coords result))) "REDACTED"])
-                       result (assoc-in  result
-                                         [:github-coords :token]
-                                         "REDACTED")
+                       result (if (:login (:github-coords result))
+                                (assoc-in result
+                                          [:github-coords :login]
+                                          [(first (:login (:github-coords result))) "REDACTED"])
+                                result)
+                       result (if (:token (:github-coords result))
+                                (assoc-in result
+                                          [:github-coords :token]
+                                          "REDACTED")
+                                result)
                        result (update-in result
                                          [:jolokia-config]
                                          assoc-if-contains
