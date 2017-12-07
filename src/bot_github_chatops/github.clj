@@ -62,4 +62,4 @@
 (defn issues
   "Lists the issues in the given repo."
   [repo-name]
-  (ti/issues org repo-name))
+  (ti/issues org repo-name opts))

@@ -42,14 +42,23 @@
                        stream-id
                        message)))
 
-(defn- list-issues!
+(defn- open-issues!
   "Lists open issues for the given repository (which must be supplied immediately after the command name)."
   [stream-id plain-text]
   (let [repo-name (second (s/split plain-text #"\s+"))
-        issues    (if repo-name (gh/issues repo-name))
-        message   (tem/render "list-issues.ftl"
-                              { :repoName repo-name
-                                :issues   issues } )]
+        message   (if repo-name
+                    (try
+                      (let [issues (gh/issues repo-name)]
+                        (tem/render "open-issues.ftl"
+                                    { :success  true
+                                      :repoName repo-name
+                                      :issues   issues } ))
+                      (catch Exception e
+                        (tem/render "open-issues.ftl"
+                                    { :success       false
+                                      :repoName      repo-name
+                                      :exceptionInfo (ex-data e) } )))
+                    (tem/render "open-issues.ftl" { :success false } ))]
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
@@ -60,7 +69,7 @@
 (def ^:private commands
   {
     "list-repos"  #'list-repos!
-    "list-issues" #'list-issues!
+    "open-issues" #'open-issues!
     "help"        #'help!
   })
 
