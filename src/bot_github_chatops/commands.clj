@@ -36,22 +36,23 @@
 (defn- list-repos!
   "Lists the GitHub repos the bot is able to interact with."
   [stream-id _]
-  (let [repos (gh/repos)]
+  (let [message (tem/render "list-repos.ftl"
+                            { :repos (gh/repos) })]
     (sym/send-message! cnxn/symphony-connection
                        stream-id
-                       (tem/render "list-repos.ftl"
-                                   { :repos (map #(vector % (gh/repo-url %)) repos) }))))
+                       message)))
 
 (defn- list-issues!
-  "Lists the issues for the given repository (which must be supplied immediately after the command name)."
+  "Lists open issues for the given repository (which must be supplied immediately after the command name)."
   [stream-id plain-text]
   (let [repo-name (second (s/split plain-text #"\s+"))
-        issues    (gh/issues repo-name)]
+        issues    (if repo-name (gh/issues repo-name))
+        message   (tem/render "list-issues.ftl"
+                              { :repoName repo-name
+                                :issues   issues } )]
     (sym/send-message! cnxn/symphony-connection
                        stream-id
-                       (tem/render "list-issues.ftl"
-                                   { :repoName repo-name
-                                     :issues   issues } ))))
+                       message)))
 
 (declare help!)
 

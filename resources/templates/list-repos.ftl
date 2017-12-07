@@ -1,11 +1,16 @@
-[#ftl]
+[#ftl output_format="HTML" auto_esc=true strip_whitespace=true]
 <messageML>
 <b>Repos:</b>
 <p>
+[#if repos?? && repos?size > 0]
   <table>
-  [#list repos as repo]
-    <tr><td><a href="${repo[1]}">${repo[0]}</a></td></tr>
+    <tr><th>Name</th><th>Description</th></tr>
+  [#list repos?sort_by("name") as repo]
+    <tr><td><a href="${repo.url}">${repo.name}</a></td><td>${repo.description!""}</td></tr>
   [/#list]
   </table>
+[#else]
+  No repositories found.
+[/#if]
 </p>
 </messageML>

@@ -34,12 +34,14 @@
           :start (:mask-private-repos github-config))
 
 (defstate masked-repos
-          :start (set (:masked-repos github-config)))
+          :start (if-let [result (seq (:masked-repos github-config))]
+                   (set result)))
 
 (defstate opts
-          :start (into { :all-pages  true
-                         :per-page   100
-                         :user-agent "GitHub ChatOps Symphony Bot" }
+          :start (into { :throw-exceptions true
+                         :all-pages        true
+                         :per-page         100
+                         :user-agent       "GitHub ChatOps Symphony Bot" }
                        (if-let [token (:token github-config)]
                          {:oauth-token token}
                          {:auth (str (first (:login github-config)) ":" (second (:login github-config)))})))
@@ -47,18 +49,14 @@
 (defn repos
   "Lists the repositories in org (with masked repos elided)."
   []
-  (let [all-repos  (tr/org-repos org opts)
-        tmp        (if mask-private-repos?
-                     (remove :private all-repos)
-                     all-repos)
-        repo-names (map :name tmp)]
-    (sort (remove #(contains? masked-repos %) repo-names))))
-
-
-(defn repo-url
-  "Returns the URL of the given repository."
-  [repo-name]
-  (str "https://github.com/" org "/" repo-name))
+  (let [result (tr/org-repos org opts)
+        result (if mask-private-repos?
+                 (remove :private result)
+                 result)
+        result (if masked-repos
+                 (remove #(contains? masked-repos (:name %)) result)
+                 result)]
+    result))
 
 
 (defn issues
