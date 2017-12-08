@@ -41,11 +41,12 @@
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
-(def ^:private list-repos-short! "Short version of list-repos - see help for that command for details." list-repos!)
+(def ^:private list-repos-short! "Shorthand for list-repos - see help for that command for details." list-repos!)
 
-(defn- list-open-issues!
-  "Lists open issues for the given repository, which must be supplied immediately after the command e.g. list-open-issues MyRepository"
-  [stream-id plain-text]
+
+(defn- list-issues-by-state!
+  "Lists issues for the given repository in the given state."
+  [stream-id plain-text state]
   (let [arguments                      (rest (s/split plain-text #"\s+"))
         repo-name                      (first arguments)
         [success error-message]        (if-not (s/blank? repo-name)
@@ -53,19 +54,40 @@
                                          [false "No repository was provided, but it is required."])
         [success error-message issues] (if success
                                          (try
-                                           [true nil (gh/open-issues repo-name)]
+                                           [true nil (gh/issues repo-name { :state state })]
                                            (catch Exception e
-                                             [false (str "Invalid repository " repo-name ".") nil]))
+                                             [false (str "Invalid repository '" repo-name "'.") nil]))
                                          [success error-message nil])
-        message                        (tem/render "list-open-issues.ftl"
+        message                        (tem/render "list-issues.ftl"
                                                    { :success      success
                                                      :repoName     repo-name
+                                                     :issueState   state
                                                      :issues       issues
                                                      :errorMessage error-message } )]
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
-(def ^:private list-open-issues-short! "Short version of list-open-issues - see help for that command for details." list-open-issues!)
+
+
+(defn- list-all-issues!
+  "Lists all issues for the given repository, which must be supplied immediately after the command e.g. list-all-issues MyRepository"
+  [stream-id plain-text]
+  (list-issues-by-state! stream-id plain-text "all"))
+(def ^:private list-all-issues-short! "Shorthand for list-all-issues - see help for that command for details." list-all-issues!)
+
+
+(defn- list-open-issues!
+  "Lists open issues for the given repository, which must be supplied immediately after the command e.g. list-open-issues MyRepository"
+  [stream-id plain-text]
+  (list-issues-by-state! stream-id plain-text "open"))
+(def ^:private list-open-issues-short! "Shorthand for list-open-issues - see help for that command for details." list-open-issues!)
+
+
+(defn- list-closed-issues!
+  "Lists closed issues for the given repository, which must be supplied immediately after the command e.g. list-closed-issues MyRepository"
+  [stream-id plain-text]
+  (list-issues-by-state! stream-id plain-text "closed"))
+(def ^:private list-closed-issues-short! "Shorthand for list-closed-issues - see help for that command for details." list-closed-issues!)
 
 
 (defn- issue-details!
@@ -103,20 +125,24 @@
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
-(def ^:private issue-details-short! "Short version of issue-details - see help for that command for details." issue-details!)
+(def ^:private issue-details-short! "Shorthand for issue-details - see help for that command for details." issue-details!)
 
 (declare help!)
 
 ; Table of commands - each of these must be a function of 2 args (stream-id, plain-text-of-message)
 (def ^:private commands
   {
-    "list-repos"       #'list-repos!
-    "lr"               #'list-repos-short!
-    "list-open-issues" #'list-open-issues!
-    "loi"              #'list-open-issues-short!
-    "issue-details"    #'issue-details!
-    "id"               #'issue-details-short!
-    "help"             #'help!
+    "list-repos"         #'list-repos!
+    "lr"                 #'list-repos-short!
+    "list-all-issues"    #'list-all-issues!
+    "lai"                #'list-all-issues-short!
+    "list-open-issues"   #'list-open-issues!
+    "loi"                #'list-open-issues-short!
+    "list-closed-issues" #'list-closed-issues!
+    "lci"                #'list-closed-issues-short!
+    "issue-details"      #'issue-details!
+    "id"                 #'issue-details-short!
+    "help"               #'help!
   })
 
 (defn- help!
