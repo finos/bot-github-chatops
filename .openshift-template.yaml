@@ -142,6 +142,16 @@ objects:
               secretKeyRef:
                 name: ${BOT_NAME}.certs
                 key: bot.user.cert.password
+          - name: ADMIN_EMAILS
+            valueFrom:
+              secretKeyRef:
+                name: ${BOT_NAME}.certs
+                key: admin.emails
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: ${BOT_NAME}.certs
+                key: github.token
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         securityContext: {}

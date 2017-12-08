@@ -20,7 +20,6 @@ deploy:
     skip_cleanup: true
     script: lein do git-info-edn, uberjar && mkdir -p target/oc && cp target/*-standalone.jar target/oc/ && ./deploy-to-openshift.sh $TRAVIS_BRANCH $TRAVIS_PULL_REQUEST
     on:
-      # branch: master
       all_branches: true
       jdk: oraclejdk8
   # Update Whitesource
@@ -28,6 +27,5 @@ deploy:
     skip_cleanup: true
     script: lein pom && mvn org.whitesource:whitesource\-maven\-plugin:3.3.1:update -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN -Dorg.whitesource.ignoredScopes=test,runtime,provided,system
     on:
-      # branch: master
-      all_branches: true
+      branch: master
       jdk: oraclejdk8
