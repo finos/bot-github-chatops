@@ -14,7 +14,7 @@ env:
 
 script: lein do git-info-edn, check
 
-#deploy:
+deploy:
 #  # Deploy binaries to OpenShift
 #  - provider: script
 #    skip_cleanup: true
@@ -22,13 +22,10 @@ script: lein do git-info-edn, check
 #    on:
 #      all_branches: true
 #      jdk: oraclejdk8
-#  # Update Whitesource
-#  - provider: script
-#    skip_cleanup: true
-#    script: lein pom && mvn org.whitesource:whitesource\-maven\-plugin:3.3.1:update -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN -Dorg.whitesource.ignoredScopes=test,runtime,provided,system
-#    on:
-#      branch: master
-#      jdk: oraclejdk8
-
-# TODO - add this for CD: ./after-success.sh $TRAVIS_BRANCH $TRAVIS_PULL_REQUEST
-after_success: lein pom && JAVA_HOME=/usr/lib/jvm/java-8-oracle mvn org.whitesource:whitesource\-maven\-plugin:3.3.1:update -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN -Dorg.whitesource.ignoredScopes=test,provided,runtime,system
+  # Update Whitesource
+  - provider: script
+    skip_cleanup: true
+    script: lein pom && mvn org.whitesource:whitesource\-maven\-plugin:3.3.1:update -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN -Dorg.whitesource.ignoredScopes=test,runtime,provided,system
+    on:
+      branch: master
+      jdk: oraclejdk8
