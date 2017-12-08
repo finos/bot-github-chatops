@@ -41,6 +41,7 @@
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
+(def ^:private list-repos-short! "Short version of list-repos - see help for that command for details." list-repos!)
 
 (defn- list-open-issues!
   "Lists open issues for the given repository, which must be supplied immediately after the command e.g. list-open-issues MyRepository"
@@ -64,6 +65,8 @@
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
+(def ^:private list-open-issues-short! "Short version of list-open-issues - see help for that command for details." list-open-issues!)
+
 
 (defn- issue-details!
   "Displays details on one or more issues in a given repository. The repository name must be supplied immediately after the command, followed by one or more issue ids e.g. issue-details MyRepository 14 17 22"
@@ -87,9 +90,9 @@
                                             [success error-message nil])
         [success error-message issues]    (if success
                                             (try
-                                              [true nil (map (partial gh/issue repo-name) issue-ids)]
+                                              [true nil (doall (map (partial gh/issue repo-name) issue-ids))]
                                               (catch Exception e
-                                                [false (str "Invalid repository " repo-name ", and/or issue numbers " (s/join ", " raw-issue-ids) ".") nil]))
+                                                [false (str "Invalid repository (" repo-name "), and/or issue numbers (" (s/join ", " raw-issue-ids) ").") nil]))
                                             [success error-message nil])
         message                           (tem/render "issue-details.ftl"
                                                       { :success      success
@@ -100,6 +103,7 @@
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
+(def ^:private issue-details-short! "Short version of issue-details - see help for that command for details." issue-details!)
 
 (declare help!)
 
@@ -107,8 +111,11 @@
 (def ^:private commands
   {
     "list-repos"       #'list-repos!
+    "`lr"              #'list-repos-short!
     "list-open-issues" #'list-open-issues!
+    "`loi"             #'list-open-issues-short!
     "issue-details"    #'issue-details!
+    "`id"              #'issue-details-short!
     "help"             #'help!
   })
 

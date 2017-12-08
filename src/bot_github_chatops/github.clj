@@ -67,13 +67,13 @@
   "Lists the non-masked repositories in the configured org."
   []
   (let [result (tr/org-repos org opts)]
-    (remove #(masked-repo? (:name %)) result)))
+    (doall (remove #(masked-repo? (:name %)) result))))
 
 (defn open-issues
   "Lists the open issues in the given repo."
   [repo-name]
   (if-not (masked-repo? repo-name)
-    (ti/issues org repo-name opts)
+    (doall (ti/issues org repo-name opts))
     (throw (RuntimeException. (str "Invalid repository " repo-name)))))
 
 (defn issue
@@ -81,5 +81,5 @@
   [repo-name issue-id]
   (if-not (masked-repo? repo-name)
     (assoc (ti/specific-issue org repo-name issue-id opts)
-           :comment_data (ti/issue-comments org repo-name issue-id opts))   ; We use an underscore in the key to keep Freemarker happy
+           :comment_data (doall (ti/issue-comments org repo-name issue-id opts)))   ; We use an underscore in the key to keep Freemarker happy
     (throw (RuntimeException. (str "Invalid repository " repo-name)))))
