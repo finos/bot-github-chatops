@@ -111,11 +111,11 @@
 (def ^:private commands
   {
     "list-repos"       #'list-repos!
-    "`lr"              #'list-repos-short!
+    "lr"               #'list-repos-short!
     "list-open-issues" #'list-open-issues!
-    "`loi"             #'list-open-issues-short!
+    "loi"              #'list-open-issues-short!
     "issue-details"    #'issue-details!
-    "`id"              #'issue-details-short!
+    "id"               #'issue-details-short!
     "help"             #'help!
   })
 
