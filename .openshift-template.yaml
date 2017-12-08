@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: github-chatops-build-template
+  name: bot-github-chatops-template
 parameters:
 - name: BOT_NAME
   description: The Bot name

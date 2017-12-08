@@ -6,7 +6,7 @@ TRAVIS_PULL_REQUEST=$2
 if [[ $BRANCH_NAME =~ master ]]; then
 	export SYMPHONY_POD_HOST="foundation.symphony.com"
 	export SYMPHONY_API_HOST="foundation-api.symphony.com"
-    export BOT_NAME="github-chatops-prod"
+    export BOT_NAME="bot-github-chatops-prod"
     export OC_PROJECT_NAME="ssf-prod"
 
 elif [[ $BRANCH_NAME =~ dev ]]; then
@@ -14,7 +14,7 @@ elif [[ $BRANCH_NAME =~ dev ]]; then
 	export OC_DELETE_LABEL="app=botunfurl-dev"
 	export SYMPHONY_POD_HOST="foundation-dev.symphony.com"
 	export SYMPHONY_API_HOST="foundation-dev-api.symphony.com"
-    export BOT_NAME="github-chatops-dev"
+    export BOT_NAME="bot-github-chatops-dev"
     export OC_PROJECT_NAME="ssf-dev"
 fi
 
