@@ -36,6 +36,7 @@
                       [mount                                 "0.1.11"]
                       [org.clojure/tools.cli                 "0.3.5"]
                       [org.clojure/tools.logging             "0.4.0"]
+                      [org.clojure/core.memoize              "0.5.9"]
                       [ch.qos.logback/logback-classic        "1.2.3"]
                       [org.slf4j/jcl-over-slf4j              "1.7.25"]
                       [org.slf4j/log4j-over-slf4j            "1.7.25"]

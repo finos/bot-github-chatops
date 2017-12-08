@@ -6,7 +6,7 @@
   <table>
     <tr><th>Name</th><th>Description</th></tr>
   [#list repos?sort_by("name") as repo]
-    <tr><td><a href="${repo.url}">${repo.name}</a></td><td>${repo.description!""}</td></tr>
+    <tr><td><a href="${repo.html_url}">${repo.name}</a></td><td>${repo.description!""}</td></tr>
   [/#list]
   </table>
 [#else]

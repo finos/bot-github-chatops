@@ -42,35 +42,74 @@
                        stream-id
                        message)))
 
-(defn- open-issues!
-  "Lists open issues for the given repository (which must be supplied immediately after the command name)."
+(defn- list-open-issues!
+  "Lists open issues for the given repository, which must be supplied immediately after the command e.g. list-open-issues MyRepository"
   [stream-id plain-text]
-  (let [repo-name (second (s/split plain-text #"\s+"))
-        message   (if repo-name
-                    (try
-                      (let [issues (gh/issues repo-name)]
-                        (tem/render "open-issues.ftl"
-                                    { :success  true
-                                      :repoName repo-name
-                                      :issues   issues } ))
-                      (catch Exception e
-                        (tem/render "open-issues.ftl"
-                                    { :success       false
-                                      :repoName      repo-name
-                                      :exceptionInfo (ex-data e) } )))
-                    (tem/render "open-issues.ftl" { :success false } ))]
+  (let [arguments                      (rest (s/split plain-text #"\s+"))
+        repo-name                      (first arguments)
+        [success error-message]        (if-not (s/blank? repo-name)
+                                         [true  nil]
+                                         [false "No repository was provided, but it is required."])
+        [success error-message issues] (if success
+                                         (try
+                                           [true nil (gh/open-issues repo-name)]
+                                           (catch Exception e
+                                             [false (str "Invalid repository " repo-name ".") nil]))
+                                         [success error-message nil])
+        message                        (tem/render "list-open-issues.ftl"
+                                                   { :success      success
+                                                     :repoName     repo-name
+                                                     :issues       issues
+                                                     :errorMessage error-message } )]
+    (sym/send-message! cnxn/symphony-connection
+                       stream-id
+                       message)))
+
+(defn- issue-details!
+  "Displays details on one or more issues in a given repository. The repository name must be supplied immediately after the command, followed by one or more issue ids e.g. issue-details MyRepository 14 17 22"
+  [stream-id plain-text]
+  (let [arguments                         (rest (s/split plain-text #"\s+"))
+        repo-name                         (first arguments)
+        [success error-message]           (if-not (s/blank? repo-name)
+                                            [true  nil]
+                                            [false "No repository was provided, but it is required."])
+        raw-issue-ids                     (rest arguments)
+        [success error-message]           (if success
+                                            (if (pos? (count raw-issue-ids))
+                                              [true  nil]
+                                              [false "No issue numbers were provided, but at least one is required."])
+                                            [success error-message])
+        [success error-message issue-ids] (if success
+                                            (try
+                                              [true nil (distinct (map #(Long/parseLong %) raw-issue-ids))]
+                                              (catch NumberFormatException nfe
+                                                [false (str "Could not parse issue numbers: " (s/join ", " raw-issue-ids)) nil]))
+                                            [success error-message nil])
+        [success error-message issues]    (if success
+                                            (try
+                                              [true nil (map (partial gh/issue repo-name) issue-ids)]
+                                              (catch Exception e
+                                                [false (str "Invalid repository " repo-name ", and/or issue numbers " (s/join ", " raw-issue-ids) ".") nil]))
+                                            [success error-message nil])
+        message                           (tem/render "issue-details.ftl"
+                                                      { :success      success
+                                                        :repoName     repo-name
+                                                        :issueIds     issue-ids
+                                                        :issues       issues
+                                                        :errorMessage error-message })]
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
 
 (declare help!)
 
-; Table of commands - each of these must be a function of 2 args (strean-id, plain-text-of-message)
+; Table of commands - each of these must be a function of 2 args (stream-id, plain-text-of-message)
 (def ^:private commands
   {
-    "list-repos"  #'list-repos!
-    "open-issues" #'open-issues!
-    "help"        #'help!
+    "list-repos"       #'list-repos!
+    "list-open-issues" #'list-open-issues!
+    "issue-details"    #'issue-details!
+    "help"             #'help!
   })
 
 (defn- help!
@@ -96,6 +135,6 @@
 (defn process-commands!
   "Process any commands in the given message.  Returns true if a command (or help) was displayed, false otherwise."
   [from-user-id stream-id text entity-data]
-  (if (not (s/blank? text))
+  (if-not (s/blank? text)
     (boolean (some identity (doall (map (partial process-command! from-user-id stream-id text (sym/to-plain-text text)) (keys commands)))))
     false))
