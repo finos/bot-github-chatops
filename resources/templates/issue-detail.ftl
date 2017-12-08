@@ -17,8 +17,10 @@
       <div class="${titleBgStyle}"><hr/></div>
       <b><a href="${issue.html_url}">${repoName} issue #${issue.number} - ${issue.title}</a></b><br/>
       <b>State: <span class="${textStyle}">${issue.state}</span></b> ❖
+      <b>Type:</b> [#if issue.pull_request??]Pull request[#else]Issue[/#if] ❖
       <b>Created by:</b> <a href="${issue.user.html_url}">${issue.user.login}</a> on ${issue.created_at?datetime.iso?string["yyyy-MM-dd h:mm:ssa z"]} ❖
-      <b>Last updated:</b> ${issue.updated_at?datetime.iso?string["yyyy-MM-dd h:mm:ssa z"]}
+      <b>Last updated:</b> ${issue.updated_at?datetime.iso?string["yyyy-MM-dd h:mm:ssa z"]}[#if issue.closed_by??] ❖
+      <b>Closed by:</b> <a href="${issue.closed_by.html_url}">${issue.closed_by.login}</a> on ${issue.closed_at?datetime.iso?string["yyyy-MM-dd h:mm:ssa z"]}[/#if]
 [#if issue.body??]
       <br/>${issue.body}
 [/#if]

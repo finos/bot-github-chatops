@@ -33,9 +33,11 @@
             [bot-github-chatops.github     :as gh]))
 
 
+(def iso-date-formatter (:date-time tf/formatters))
+
 (defn- list-repos!
   "Lists the GitHub repos the bot is able to interact with."
-  [stream-id _]
+  [stream-id _ _]
   (let [message (tem/render "list-repos.ftl"
                             { :repos (gh/repos) })]
     (sym/send-message! cnxn/symphony-connection
@@ -44,24 +46,25 @@
 (def ^:private list-repos-short! "Shorthand for list-repos - see help for that command for details." list-repos!)
 
 
-(defn- list-issues-by-state!
+(defn- list-issues!
   "Lists issues for the given repository in the given state."
-  [stream-id plain-text state]
-  (let [arguments                      (rest (s/split plain-text #"\s+"))
+  [stream-id words summary command-name issue-filter]
+  (let [arguments                      (rest words)
         repo-name                      (first arguments)
         [success error-message]        (if-not (s/blank? repo-name)
                                          [true  nil]
                                          [false "No repository was provided, but it is required."])
         [success error-message issues] (if success
                                          (try
-                                           [true nil (gh/issues repo-name { :state state })]
+                                           [true nil (gh/issues repo-name issue-filter)]
                                            (catch Exception e
                                              [false (str "Invalid repository '" repo-name "'.") nil]))
                                          [success error-message nil])
         message                        (tem/render "list-issues.ftl"
                                                    { :success      success
                                                      :repoName     repo-name
-                                                     :issueState   state
+                                                     :summary      summary
+                                                     :commandName  command-name
                                                      :issues       issues
                                                      :errorMessage error-message } )]
     (sym/send-message! cnxn/symphony-connection
@@ -70,30 +73,37 @@
 
 
 (defn- list-all-issues!
-  "Lists all issues for the given repository, which must be supplied immediately after the command e.g. list-all-issues MyRepository"
-  [stream-id plain-text]
-  (list-issues-by-state! stream-id plain-text "all"))
+  "Lists all issues in the given repository, which must be supplied immediately after the command e.g. list-all-issues MyRepository"
+  [stream-id _ words]
+  (list-issues! stream-id words "all" "list-all-issues" { :state "all" }))
 (def ^:private list-all-issues-short! "Shorthand for list-all-issues - see help for that command for details." list-all-issues!)
 
 
 (defn- list-open-issues!
-  "Lists open issues for the given repository, which must be supplied immediately after the command e.g. list-open-issues MyRepository"
-  [stream-id plain-text]
-  (list-issues-by-state! stream-id plain-text "open"))
+  "Lists open issues in the given repository, which must be supplied immediately after the command e.g. list-open-issues MyRepository"
+  [stream-id _ words]
+  (list-issues! stream-id words "open" "list-open-issues" { :state "open" }))
 (def ^:private list-open-issues-short! "Shorthand for list-open-issues - see help for that command for details." list-open-issues!)
 
 
 (defn- list-closed-issues!
-  "Lists closed issues for the given repository, which must be supplied immediately after the command e.g. list-closed-issues MyRepository"
-  [stream-id plain-text]
-  (list-issues-by-state! stream-id plain-text "closed"))
+  "Lists closed issues in the given repository, which must be supplied immediately after the command e.g. list-closed-issues MyRepository"
+  [stream-id _ words]
+  (list-issues! stream-id words "closed" "list-closed-issues" { :state "closed" }))
 (def ^:private list-closed-issues-short! "Shorthand for list-closed-issues - see help for that command for details." list-closed-issues!)
+
+
+(defn- list-recently-updated-issues!
+  "Lists issues updated in the last month in the given repository, which must be supplied immediately after the command e.g. list-recently-updated-issues MyRepository"
+  [stream-id _ words]
+  (list-issues! stream-id words "recently updated" "list-recently-updated-issues" { :state "all" :since (tf/unparse iso-date-formatter (tm/minus (tm/now) (tm/months 1))) }))
+(def ^:private list-recently-updated-issues-short! "Shorthand for list-recently-updated-issues - see help for that command for details." list-recently-updated-issues!)
 
 
 (defn- issue-details!
   "Displays details on one or more issues in a given repository. The repository name must be supplied immediately after the command, followed by one or more issue ids e.g. issue-details MyRepository 14 17 22"
-  [stream-id plain-text]
-  (let [arguments                         (rest (s/split plain-text #"\s+"))
+  [stream-id _ words]
+  (let [arguments                         (rest words)
         repo-name                         (first arguments)
         [success error-message]           (if-not (s/blank? repo-name)
                                             [true  nil]
@@ -129,25 +139,27 @@
 
 (declare help!)
 
-; Table of commands - each of these must be a function of 2 args (stream-id, plain-text-of-message)
+; Table of commands - each of these must be a function of 3 args (stream-id, plain-text-of-message, words-in-message)
 (def ^:private commands
   {
-    "list-repos"         #'list-repos!
-    "lr"                 #'list-repos-short!
-    "list-all-issues"    #'list-all-issues!
-    "lai"                #'list-all-issues-short!
-    "list-open-issues"   #'list-open-issues!
-    "loi"                #'list-open-issues-short!
-    "list-closed-issues" #'list-closed-issues!
-    "lci"                #'list-closed-issues-short!
-    "issue-details"      #'issue-details!
-    "id"                 #'issue-details-short!
-    "help"               #'help!
+    "list-repos"                   #'list-repos!
+    "lr"                           #'list-repos-short!
+    "list-all-issues"              #'list-all-issues!
+    "lai"                          #'list-all-issues-short!
+    "list-open-issues"             #'list-open-issues!
+    "loi"                          #'list-open-issues-short!
+    "list-closed-issues"           #'list-closed-issues!
+    "lci"                          #'list-closed-issues-short!
+    "list-recently-updated-issues" #'list-recently-updated-issues!
+    "lrui"                         #'list-recently-updated-issues-short!
+    "issue-details"                #'issue-details!
+    "id"                           #'issue-details-short!
+    "help"                         #'help!
   })
 
 (defn- help!
   "Displays this help message."
-  [stream-id _]
+  [stream-id _ _]
   (sym/send-message! cnxn/symphony-connection
                      stream-id
                      (tem/render "help.ftl"
@@ -156,14 +168,15 @@
 (defn- process-command!
   "Looks for given command in the message text, executing it and returning true if it was found, false otherwise."
   [from-user-id stream-id text plain-text command]
-  (if (s/starts-with? plain-text command)
-    (do
-      (log/debug "Command"      command
-                 "requested by" (:email-address (syu/user cnxn/symphony-connection from-user-id))
-                 "in stream"    stream-id)
-      ((get commands command) stream-id plain-text)
-      true)
-    false))
+  (let [words (s/split plain-text #"\s+")]
+    (if (= (first words) command)
+      (do
+        (log/debug "Command"      command
+                   "requested by" (:email-address (syu/user cnxn/symphony-connection from-user-id))
+                   "in stream"    stream-id)
+        ((get commands command) stream-id plain-text words)
+        true)
+      false)))
 
 (defn process-commands!
   "Process any commands in the given message.  Returns true if a command (or help) was displayed, false otherwise."
