@@ -15,13 +15,13 @@ env:
 script: lein do git-info-edn, check
 
 deploy:
- # Deploy binaries to OpenShift
- - provider: script
-   skip_cleanup: true
-   script: lein do git-info-edn, uberjar && mkdir -p target/oc && cp target/*-standalone.jar target/oc/ && ./deploy-to-openshift.sh $TRAVIS_BRANCH $TRAVIS_PULL_REQUEST
-   on:
-     branch: master
-     jdk: oraclejdk8
+  # Deploy binaries to OpenShift
+  - provider: script
+    skip_cleanup: true
+    script: lein do git-info-edn, uberjar && mkdir -p target/oc && cp target/*-standalone.jar target/oc/ && ./deploy-to-openshift.sh $TRAVIS_BRANCH $TRAVIS_PULL_REQUEST
+    on:
+      branch: master
+      jdk: oraclejdk8
   # Update Whitesource
   - provider: script
     skip_cleanup: true
