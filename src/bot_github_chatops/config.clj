@@ -38,7 +38,8 @@
   [opts tag value]
   "Adds a #split reader macro to aero - see https://github.com/juxt/aero/issues/55"
   (let [[s re] value]
-    (s/split s (re-pattern re))))
+    (if (and s re)
+      (s/split s (re-pattern re)))))
 
 (defstate config
           :start (if-let [config-file (:config-file (mnt/args))]

@@ -26,10 +26,15 @@
             [bot-github-chatops.config :as cfg]))
 
 (defstate github-config
-          :start (:github-coords cfg/config))
+          :start (if-let [result (:github-coords cfg/config)]
+                   result
+                   (throw (RuntimeException. "GitHub configuration is mandatory, but is missing."))))
 
 (defstate org
-          :start (:org github-config))
+          :start (let [result (:org github-config)]
+                   (if-not (s/blank? result)
+                     result
+                     "symphonyoss")))
 
 (defstate opts
           :start (into { :throw-exceptions true
@@ -38,14 +43,20 @@
                          :user-agent       "GitHub ChatOps Symphony Bot" }
                        (if-let [token (:token github-config)]
                          { :oauth-token token }
-                         { :auth (str (first (:login github-config)) ":" (second (:login github-config))) })))
+                         (let [login    (first (:login github-config))
+                               password (second (:login github-config))]
+                           (if (and login password)
+                             { :auth (str login ":" password) }
+                             (throw (RuntimeException. "GitHub credentials missing from configuration.")))))))
 
 (defstate mask-private-repos?
-          :start (boolean (:mask-private-repos github-config)))
+          :start (if-let [from-config (:mask-private-repos github-config)]
+                   (boolean from-config)
+                   true))
 
 (defstate masked-repos
-          :start (if-let [masked-repos (seq (:masked-repos github-config))]
-                   (set masked-repos)))
+          :start (if-let [from-config (seq (:masked-repos github-config))]
+                   (set from-config)))
 
 (defn private-repo?
   "Is the given repository private?"
@@ -67,19 +78,30 @@
   "Lists the non-masked repositories in the configured org."
   []
   (let [result (tr/org-repos org opts)]
-    (remove #(masked-repo? (:name %)) result)))
+    (doall (remove #(masked-repo? (:name %)) result))))
 
-(defn open-issues
-  "Lists the open issues in the given repo."
-  [repo-name]
-  (if-not (masked-repo? repo-name)
-    (ti/issues org repo-name opts)
-    (throw (RuntimeException. (str "Invalid repository " repo-name)))))
+(defn issues
+  "Lists issues in the given repo, optionally including these filtering and sorting options:
+
+    milestone      - milestone number, or '*' for all, or 'none' for issues without milestones
+    state          - 'open', 'closed', or 'all'
+    assignee       - GitHub user id or '*' for any, or 'none' for issues without an assignee
+    creator        - GitHub user id
+    mentioned      - GitHub user id
+    labels         - comma-delimited list of label names
+    sort-field     - 'created', 'updated', or 'comments'
+    sort-direction - 'asc' or 'desc'
+    since          - issues updated since this date (formatted as an ISO 8601 string: 'YYYY-MM-DDTHH:MM:SSZ')"
+  ([repo-name] (issues repo-name nil))
+  ([repo-name filters]
+   (if-not (masked-repo? repo-name)
+     (doall (ti/issues org repo-name (into opts filters)))
+     (throw (RuntimeException. (str "Invalid repository '" repo-name "'."))))))
 
 (defn issue
   "Gets the details of a single issue in the given repo, including comments."
   [repo-name issue-id]
   (if-not (masked-repo? repo-name)
     (assoc (ti/specific-issue org repo-name issue-id opts)
-           :comment_data (ti/issue-comments org repo-name issue-id opts))   ; We use an underscore in the key to keep Freemarker happy
+           :comment_data (doall (ti/issue-comments org repo-name issue-id opts)))   ; We use an underscore in the key to keep Freemarker happy
     (throw (RuntimeException. (str "Invalid repository " repo-name)))))

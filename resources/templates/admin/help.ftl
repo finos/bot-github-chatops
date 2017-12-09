@@ -1,6 +1,6 @@
 [#ftl output_format="HTML" auto_esc=true strip_whitespace=true]
 <messageML>
-<b>Administration commands:</b>
+<b>Administrative commands:</b>
 <p>
   <table>
     <tr><th>Command</th><th>Description</th></tr>
