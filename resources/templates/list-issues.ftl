@@ -12,6 +12,6 @@
 [#else]
 <p class="tempo-text-color--red"><b>${errorMessage}</b></p>
 <p>Correct usage is <b>${commandName} repo-name</b></p>
-<p>The list of repositories can be obtained using the <b>list-repos</b> command.</p>
+<p>Help can be obtained using the <b>help</b> command.</p>
 [/#if]
 </messageML>
