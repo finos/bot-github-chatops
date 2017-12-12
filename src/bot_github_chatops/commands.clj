@@ -37,7 +37,7 @@
 
 (defn- list-repos!
   "Lists the GitHub repos the bot is able to interact with."
-  [stream-id _ _]
+  [_ stream-id _ _]
   (let [message (tem/render "list-repos.ftl"
                             { :repos (gh/repos) })]
     (sym/send-message! cnxn/symphony-connection
@@ -74,35 +74,35 @@
 
 (defn- list-all-issues!
   "Lists all issues in the given repository, which must be supplied immediately after the command e.g. list-all-issues MyRepository"
-  [stream-id _ words]
+  [_ stream-id _ words]
   (list-issues! stream-id words "all" "list-all-issues" { :state "all" }))
 (def ^:private list-all-issues-short! "Shorthand for list-all-issues - see help for that command for details." list-all-issues!)
 
 
 (defn- list-open-issues!
   "Lists open issues in the given repository, which must be supplied immediately after the command e.g. list-open-issues MyRepository"
-  [stream-id _ words]
+  [_ stream-id _ words]
   (list-issues! stream-id words "open" "list-open-issues" { :state "open" }))
 (def ^:private list-open-issues-short! "Shorthand for list-open-issues - see help for that command for details." list-open-issues!)
 
 
 (defn- list-closed-issues!
   "Lists closed issues in the given repository, which must be supplied immediately after the command e.g. list-closed-issues MyRepository"
-  [stream-id _ words]
+  [_ stream-id _ words]
   (list-issues! stream-id words "closed" "list-closed-issues" { :state "closed" }))
 (def ^:private list-closed-issues-short! "Shorthand for list-closed-issues - see help for that command for details." list-closed-issues!)
 
 
 (defn- list-recently-updated-issues!
   "Lists issues updated in the last month in the given repository, which must be supplied immediately after the command e.g. list-recently-updated-issues MyRepository"
-  [stream-id _ words]
+  [_ stream-id _ words]
   (list-issues! stream-id words "recently updated" "list-recently-updated-issues" { :state "all" :since (tf/unparse iso-date-formatter (tm/minus (tm/now) (tm/months 1))) }))
 (def ^:private list-recently-updated-issues-short! "Shorthand for list-recently-updated-issues - see help for that command for details." list-recently-updated-issues!)
 
 
 (defn- issue-details!
   "Displays details on one or more issues in a given repository. The repository name must be supplied immediately after the command, followed by one or more issue ids e.g. issue-details MyRepository 14 17 22"
-  [stream-id _ words]
+  [_ stream-id _ words]
   (let [arguments                         (rest words)
         repo-name                         (first arguments)
         [success error-message]           (if-not (s/blank? repo-name)
@@ -137,9 +137,56 @@
                        message)))
 (def ^:private issue-details-short! "Shorthand for issue-details - see help for that command for details." issue-details!)
 
+
+(defn- add-comment!
+  "Adds a comment to an issue in a given repository. The repository name must be supplied immediately after the command, followed by a single issue ids, followed by the comment e.g. add-comment MyRepository 42 Can you please provide the log files?"
+  [from-user-id stream-id _ words]
+  (let [arguments                         (rest words)
+        repo-name                         (first arguments)
+        [success error-message]           (if-not (s/blank? repo-name)
+                                            [true  nil]
+                                            [false "No repository was provided, but it is required."])
+        raw-issue-id                      (first (rest arguments))
+        [success error-message issue-id]  (if success
+                                            (if-not (s/blank? raw-issue-id)
+                                              (try
+                                                [true nil (Long/parseLong raw-issue-id)]
+                                                (catch NumberFormatException nfe
+                                                  [false (str "Could not parse issue number: " raw-issue-id) nil]))
+                                              [false "No issue number was provided, but it is required." nil])
+                                            [success error-message nil])
+        comment-text                      (s/join " " (rest (rest arguments)))
+        [success error-message]           (if success
+                                            (if-not (s/blank? comment-text)
+                                              (try
+                                                (let [from-user      (syu/user cnxn/symphony-connection from-user-id)
+                                                      github-comment (tem/render "add-comment-github.ftl"
+                                                                                 { :displayName  (:display-name from-user)
+                                                                                   :userId       from-user-id
+                                                                                   :message      comment-text })]
+                                                  (gh/add-comment repo-name
+                                                                  issue-id
+                                                                  github-comment)
+                                                  [true nil])
+                                                (catch Exception e
+                                                  [false (str "Invalid repository (" repo-name "), and/or issue number (" raw-issue-id ").")]))
+                                              [false "No comment was provided, but it is required."])
+                                            [success error-message])
+        message                           (tem/render "add-comment.ftl"
+                                                      { :success      success
+                                                        :org          gh/org
+                                                        :repoName     repo-name
+                                                        :issueId      issue-id
+                                                        :errorMessage error-message })]
+    (sym/send-message! cnxn/symphony-connection
+                       stream-id
+                       message)))
+(def ^:private add-comment-short! "Shorthand for add-comment - see help for that command for details." add-comment!)
+
+
 (declare help!)
 
-; Table of commands - each of these must be a function of 3 args (stream-id, plain-text-of-message, words-in-message)
+; Table of commands - each of these must be a function of 4 args (from-user-id, stream-id, plain-text-of-message, words-in-message)
 (def ^:private commands
   {
     "list-repos"                   #'list-repos!
@@ -154,12 +201,14 @@
     "lrui"                         #'list-recently-updated-issues-short!
     "issue-details"                #'issue-details!
     "id"                           #'issue-details-short!
+    "add-comment"                  #'add-comment!
+    "ac"                           #'add-comment-short!
     "help"                         #'help!
   })
 
 (defn- help!
   "Displays this help message."
-  [stream-id _ _]
+  [_ stream-id _ _]
   (sym/send-message! cnxn/symphony-connection
                      stream-id
                      (tem/render "help.ftl"
@@ -174,7 +223,7 @@
         (log/debug "Command"      command
                    "requested by" (:email-address (syu/user cnxn/symphony-connection from-user-id))
                    "in stream"    stream-id)
-        ((get commands command) stream-id plain-text words)
+        ((get commands command) from-user-id stream-id plain-text words)
         true)
       false)))
 

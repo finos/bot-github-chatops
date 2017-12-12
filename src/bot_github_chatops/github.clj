@@ -95,7 +95,7 @@
   ([repo-name] (issues repo-name nil))
   ([repo-name filters]
    (if-not (masked-repo? repo-name)
-     (doall (ti/issues org repo-name (into opts filters)))
+     (ti/issues org repo-name (into opts filters))
      (throw (RuntimeException. (str "Invalid repository '" repo-name "'."))))))
 
 (defn issue
@@ -103,5 +103,14 @@
   [repo-name issue-id]
   (if-not (masked-repo? repo-name)
     (assoc (ti/specific-issue org repo-name issue-id opts)
-           :comment_data (doall (ti/issue-comments org repo-name issue-id opts)))   ; We use an underscore in the key to keep Freemarker happy
+           :comment_data (ti/issue-comments org repo-name issue-id opts))
     (throw (RuntimeException. (str "Invalid repository " repo-name)))))
+
+
+(defn add-comment
+  "Adds the given content as a comment to the given issue."
+  [repo-name issue-id comment-content]
+  (if-not (masked-repo? repo-name)
+    (ti/create-comment org repo-name issue-id comment-content opts)
+    (throw (RuntimeException. (str "Invalid repository " repo-name)))))
+
