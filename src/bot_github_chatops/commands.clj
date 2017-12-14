@@ -218,7 +218,7 @@
   "Looks for given command in the message text, executing it and returning true if it was found, false otherwise."
   [from-user-id stream-id text plain-text command]
   (let [words (s/split plain-text #"\s+")]
-    (if (= (first words) command)
+    (if (= (s/lower-case (first words)) command)
       (do
         (log/debug "Command"      command
                    "requested by" (:email-address (syu/user cnxn/symphony-connection from-user-id))
