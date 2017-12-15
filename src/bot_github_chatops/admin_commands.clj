@@ -49,7 +49,8 @@
                                      :buildDate        (u/date-as-string cfg/build-date)
                                      :botUptime        (u/interval-to-string (tm/interval cfg/boot-time now))
                                      :lastReloadTime   (u/interval-to-string (tm/interval cfg/last-reload-time now))
-                                     :allocatedRam     (u/size-to-string (.totalMemory (java.lang.Runtime/getRuntime))) }))))
+                                     :freeRam          (u/size-to-string (.freeMemory (Runtime/getRuntime)))
+                                     :allocatedRam     (u/size-to-string (.totalMemory (Runtime/getRuntime))) }))))
 
 (defn- config!
   "Provides the current configuration of the bot."
@@ -90,11 +91,11 @@
   [stream-id _]
   (sym/send-message! cnxn/symphony-connection
                      stream-id
-                     (str "<messageML>Garbage collection initiated at " (u/now-as-string) ".</messageML>"))
+                     (str "<messageML>Garbage collection initiated at " (u/now-as-string) ". Free memory before: " (u/size-to-string (.freeMemory (Runtime/getRuntime))) ".</messageML>"))
   (.gc (java.lang.Runtime/getRuntime))
   (sym/send-message! cnxn/symphony-connection
                      stream-id
-                     (str "<messageML>Garbage collection completed at " (u/now-as-string) ".</messageML>")))
+                     (str "<messageML>Garbage collection completed at " (u/now-as-string) ". Free memory after: " (u/size-to-string (.freeMemory (Runtime/getRuntime))) ".</messageML>")))
 
 (declare help!)
 

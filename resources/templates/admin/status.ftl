@@ -8,7 +8,7 @@
     <tr><td><b>Bot build</b></td><td><a href="${gitUrl}">git revision ${gitRevision}</a>, built ${buildDate}</td></tr>
     <tr><td><b>Bot uptime</b></td><td>${botUptime}</td></tr>
     <tr><td><b>Time since last configuration reload</b></td><td>${lastReloadTime}</td></tr>
-    <tr><td><b>Memory allocated</b></td><td>${allocatedRam}</td></tr>
+    <tr><td><b>Memory free / allocated</b></td><td>${freeRam} / ${allocatedRam}</td></tr>
   </table>
 </p>
 </messageML>
