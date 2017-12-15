@@ -43,7 +43,6 @@
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
-(def ^:private list-repos-short! "Shorthand for list-repos - see help for that command for details." list-repos!)
 
 
 (defn- list-issues!
@@ -76,28 +75,24 @@
   "Lists all issues in the given repository, which must be supplied immediately after the command e.g. list-all-issues MyRepository"
   [_ stream-id _ words]
   (list-issues! stream-id words "all" "list-all-issues" { :state "all" }))
-(def ^:private list-all-issues-short! "Shorthand for list-all-issues - see help for that command for details." list-all-issues!)
 
 
 (defn- list-open-issues!
   "Lists open issues in the given repository, which must be supplied immediately after the command e.g. list-open-issues MyRepository"
   [_ stream-id _ words]
   (list-issues! stream-id words "open" "list-open-issues" { :state "open" }))
-(def ^:private list-open-issues-short! "Shorthand for list-open-issues - see help for that command for details." list-open-issues!)
 
 
 (defn- list-closed-issues!
   "Lists closed issues in the given repository, which must be supplied immediately after the command e.g. list-closed-issues MyRepository"
   [_ stream-id _ words]
   (list-issues! stream-id words "closed" "list-closed-issues" { :state "closed" }))
-(def ^:private list-closed-issues-short! "Shorthand for list-closed-issues - see help for that command for details." list-closed-issues!)
 
 
 (defn- list-recently-updated-issues!
   "Lists issues updated in the last month in the given repository, which must be supplied immediately after the command e.g. list-recently-updated-issues MyRepository"
   [_ stream-id _ words]
   (list-issues! stream-id words "recently updated" "list-recently-updated-issues" { :state "all" :since (tf/unparse iso-date-formatter (tm/minus (tm/now) (tm/months 1))) }))
-(def ^:private list-recently-updated-issues-short! "Shorthand for list-recently-updated-issues - see help for that command for details." list-recently-updated-issues!)
 
 
 (defn- issue-details!
@@ -135,11 +130,10 @@
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
-(def ^:private issue-details-short! "Shorthand for issue-details - see help for that command for details." issue-details!)
 
 
 (defn- add-comment!
-  "Adds a comment to an issue in a given repository. The repository name must be supplied immediately after the command, followed by a single issue ids, followed by the comment e.g. add-comment MyRepository 42 Can you please provide the log files?"
+  "Adds a comment to an issue in a given repository. The repository name must be supplied immediately after the command, followed by a single issue id, followed by the comment e.g. add-comment MyRepository 42 Can you please provide the log files?"
   [from-user-id stream-id _ words]
   (let [arguments                         (rest words)
         repo-name                         (first arguments)
@@ -181,7 +175,6 @@
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        message)))
-(def ^:private add-comment-short! "Shorthand for add-comment - see help for that command for details." add-comment!)
 
 
 (declare help!)
@@ -190,29 +183,34 @@
 (def ^:private commands
   {
     "list-repos"                   #'list-repos!
-    "lr"                           #'list-repos-short!
+    "lr"                           #'list-repos!
     "list-all-issues"              #'list-all-issues!
-    "lai"                          #'list-all-issues-short!
+    "lai"                          #'list-all-issues!
     "list-open-issues"             #'list-open-issues!
-    "loi"                          #'list-open-issues-short!
+    "loi"                          #'list-open-issues!
     "list-closed-issues"           #'list-closed-issues!
-    "lci"                          #'list-closed-issues-short!
+    "lci"                          #'list-closed-issues!
     "list-recently-updated-issues" #'list-recently-updated-issues!
-    "lrui"                         #'list-recently-updated-issues-short!
+    "lrui"                         #'list-recently-updated-issues!
     "issue-details"                #'issue-details!
-    "id"                           #'issue-details-short!
+    "id"                           #'issue-details!
     "add-comment"                  #'add-comment!
-    "ac"                           #'add-comment-short!
+    "ac"                           #'add-comment!
     "help"                         #'help!
   })
 
 (defn- help!
   "Displays this help message."
   [_ stream-id _ _]
-  (sym/send-message! cnxn/symphony-connection
-                     stream-id
-                     (tem/render "help.ftl"
-                                 { :commands (map #(vector (key %) (:doc (meta (val %)))) (sort-by key commands)) })))
+  (let [commands-in-help-format (sort-by first
+                                         (map #(vec [(s/join ", " (sort-by (fn [s] (- (count s)))    ; Join all commands into a single string, sorted by length descending (so that we get the long name first)
+                                                                           (map first (second %))))
+                                                     (:doc (meta (first %)))])
+                                              (group-by val commands)))]
+    (sym/send-message! cnxn/symphony-connection
+                       stream-id
+                       (tem/render "help.ftl"
+                                   { :commands commands-in-help-format }))))
 
 (defn- process-command!
   "Looks for given command in the message text, executing it and returning true if it was found, false otherwise."
