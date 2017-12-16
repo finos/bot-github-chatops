@@ -34,7 +34,10 @@
 (defn- status!
   "Provides status information about the bot."
   [stream-id _]
-  (let [now (tm/now)]
+  (let [now           (tm/now)
+        free-ram      (.freeMemory  (Runtime/getRuntime))
+        allocated-ram (.totalMemory (Runtime/getRuntime))
+        used-ram      (- allocated-ram free-ram)]
     (sym/send-message! cnxn/symphony-connection
                        stream-id
                        (tem/render "admin/status.ftl"
@@ -49,8 +52,9 @@
                                      :buildDate        (u/date-as-string cfg/build-date)
                                      :botUptime        (u/interval-to-string (tm/interval cfg/boot-time now))
                                      :lastReloadTime   (u/interval-to-string (tm/interval cfg/last-reload-time now))
-                                     :freeRam          (u/size-to-string (.freeMemory (Runtime/getRuntime)))
-                                     :allocatedRam     (u/size-to-string (.totalMemory (Runtime/getRuntime))) }))))
+                                     :usedRam          (u/size-to-string used-ram)
+                                     :allocatedRam     (u/size-to-string allocated-ram)
+                                     :percentRamUsed   (/ (* used-ram 100) allocated-ram) }))))
 
 (defn- config!
   "Provides the current configuration of the bot."
