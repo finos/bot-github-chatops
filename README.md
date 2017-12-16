@@ -13,7 +13,26 @@ repositories](https://github.com/symphonyoss) via CLI-esque interactions with th
 
 ## Current Status
 
-Follow our progress towards an MVP [here](https://github.com/symphonyoss/bot-github-chatops/projects/1)!
+The [MVP](https://github.com/symphonyoss/bot-github-chatops/projects/1) is effectively complete, and the bot has been
+deployed on a pre-production basis to the Foundation's production pod, with cross-pod enabled so that you can interact
+with it from any cross-pod enabled Symphony account.
+
+## Installation
+
+There is no installation required for the bot, beyond searching for it on the Symphony production network (the bot's
+name is "GitHub Bot") and requesting a connection.  The bot automatically accepts all connections requests every 30
+minutes, so it may take up to that long to accept your request.
+
+If you have an account on the [Symphony public pod](https://my.symphony.com/), and have already established a connection
+to the bot, you may [chat with the bot here](https://my.symphony.com/?embed/&module=im&userIds=73942156967980).
+
+## Usage
+
+The bot will provide you with help by asking it for `help`:
+
+<p align="center">
+  <img width="500px" alt="GitHub ChatOps bot help" src="https://raw.githubusercontent.com/symphonyoss/bot-github-chatops/master/bot-github-chatops-example.png"/>
+</p>
 
 ## Developer Information
 
