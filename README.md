@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/symphonyoss/bot-github-chatops.svg?branch=master)](https://travis-ci.org/symphonyoss/bot-github-chatops)
 [![Open Issues](https://img.shields.io/github/issues/symphonyoss/bot-github-chatops.svg)](https://github.com/symphonyoss/bot-github-chatops/issues)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/symphonyoss/bot-github-chatops.svg)](http://isitmaintained.com/project/symphonyoss/bot-github-chatops "Average time to resolve an issue")
-<!-- [![Dependencies Status](https://versions.deps.co/symphonyoss/bot-github-chatops/status.svg)](https://versions.deps.co/symphonyoss/bot-github-chatops) -->
+[![Dependencies Status](https://versions.deps.co/symphonyoss/bot-github-chatops/status.svg)](https://versions.deps.co/symphonyoss/bot-github-chatops)
 [![License](https://img.shields.io/github/license/symphonyoss/bot-github-chatops.svg)](https://github.com/symphonyoss/bot-github-chatops/blob/master/LICENSE)
 [![Symphony Software Foundation - Incubating](https://cdn.rawgit.com/symphonyoss/contrib-toolbox/master/images/ssf-badge-incubating.svg)](https://symphonyoss.atlassian.net/wiki/display/FM/Incubating)
 
