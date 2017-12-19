@@ -15,7 +15,7 @@
 ; limitations under the License.
 ;
 
-(def jackson-version "2.9.2")
+(def jackson-version "2.9.3")
 
 (defproject org.symphonyoss.symphony/bot-github-chatops "0.1.0-SNAPSHOT"
   :description      "A bot that uses ChatOps techniques to allow a firm employee to interact with GitHub issues and PRs in the symphonyoss organisation's repositories, via CLI-esque interactions with the bot."
@@ -62,9 +62,9 @@
                       [joda-time/joda-time                                          "2.9.9"]
                       [org.hamcrest/hamcrest-core                                   "1.3"]
                     ]
-  :profiles         {:dev {:dependencies [[midje         "1.9.0"]]
+  :profiles         {:dev {:dependencies [[midje         "1.9.1"]]
                            :plugins      [[lein-midje    "3.2.1"]
-                                          [lein-licenses "0.2.1"]]}
+                                          [lein-licenses "0.2.2"]]}
                      :uberjar {:aot          :all
                                :uberjar-name "bot-github-chatops-standalone.jar"}}
   :main             bot-github-chatops.main
