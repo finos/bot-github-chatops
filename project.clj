@@ -23,14 +23,14 @@
   :license          {:spdx-license-identifier "Apache-2.0"
                      :name                    "Apache License, Version 2.0"
                      :url                     "http://www.apache.org/licenses/LICENSE-2.0"}
-  :min-lein-version "2.7.0"
+  :min-lein-version "2.8.1"
   :repositories     [["sonatype-snapshots" {:url "https://oss.sonatype.org/content/groups/public" :snapshots true}]
                      ["jitpack"            {:url "https://jitpack.io"}]]
   :plugins          [
                       [org.noisesmith/git-info-edn "0.2.1"]
                     ]
   :dependencies     [
-                      [org.clojure/clojure                   "1.8.0"]
+                      [org.clojure/clojure                   "1.9.0"]
                       [org.apache.commons/commons-lang3      "3.7"]
                       [aero                                  "1.1.2"]
                       [mount                                 "0.1.11"]
@@ -46,8 +46,8 @@
                       [clj-time                              "0.14.2"]
                       [com.github.grinnbearit/freemarker-clj "-SNAPSHOT"]
                       [irresponsible/tentacles               "0.6.1"]
-                      [org.symphonyoss/clj-symphony          "0.3.0-SNAPSHOT" :exclusions [org.clojure/clojure
-                                                                                      org.slf4j/slf4j-log4j12]]
+                      [org.symphonyoss/clj-symphony          "0.3.0" :exclusions [org.clojure/clojure
+                                                                                  org.slf4j/slf4j-log4j12]]
 
                       ; The following dependencies are inherited but have conflicting versions, so we "pin" the versions here
                       [com.fasterxml.jackson.core/jackson-core                      ~jackson-version]
@@ -67,5 +67,10 @@
                                           [lein-licenses "0.2.2"]]}
                      :uberjar {:aot          :all
                                :uberjar-name "bot-github-chatops-standalone.jar"}}
+  :jvm-opts         ~(let [version     (System/getProperty "java.version")
+                           [major _ _] (clojure.string/split version #"\.")]
+                       (if (= major "9")
+                         ["--add-modules" "java.xml.bind"]
+                         []))
   :main             bot-github-chatops.main
   )
