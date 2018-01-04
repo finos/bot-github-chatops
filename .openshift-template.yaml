@@ -177,7 +177,7 @@ objects:
   metadata:
     labels:
       app: ${BOT_NAME}
-    name: jolokia
+    name: ${BOT_NAME}-jolokia
   spec:
     selector:
       docker-registry: default
@@ -191,8 +191,8 @@ objects:
   metadata:
     labels:
       app: ${BOT_NAME}
-    name: jolokia
+    name: ${BOT_NAME}-jolokia
   spec:
     to:
       kind: Service
-      name: jolokia
+      name: ${BOT_NAME}-jolokia
