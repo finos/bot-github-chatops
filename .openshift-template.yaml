@@ -87,8 +87,12 @@ objects:
           imagePullPolicy: Always
           name: ${BOT_NAME}
           ports:
-          - containerPort: 4567
+          - containerPort: 8778
+            name: jolokia
             protocol: TCP
+          # livenessProbe:
+          #   exec:
+          #     command:
           resources: {}
           terminationMessagePath: /dev/termination-log
           env:
