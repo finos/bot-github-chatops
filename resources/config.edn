@@ -25,8 +25,9 @@
   ; For details, see https://github.com/rhuss/jolokia/blob/master/agent/jvm/src/main/resources/default-jolokia-agent.properties
   ; Note: All keys and values MUST be strings - this is a Jolokia requirement
   :jolokia-config {
-    "host" #or [#env JOLOKIA_HOST "localhost"]
-    "port" #or [#env JOLOKIA_PORT "8778"]
+    "host"  #or [#env JOLOKIA_HOST  "localhost"]
+    "port"  #or [#env JOLOKIA_PORT  "8778"]
+    "debug" #or [#env JOLOKIA_DEBUG "false"]
   }
 
   ; The interval (in minutes) for checking and accepting new connection requests
