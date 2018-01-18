@@ -15,9 +15,9 @@
 
   <logger name="org.apache"      level="ERROR" />
   <logger name="org.symphonyoss" level="ERROR" />
-  <logger name="org.jolokia"     level="DEBUG" />
+  <logger name="org.jolokia"     level="ERROR" />
 
-  <root level="DEBUG">
+  <root level="INFO">
     <appender-ref ref="FILE" />
     <appender-ref ref="STDOUT" />
   </root>
