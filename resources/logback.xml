@@ -15,7 +15,7 @@
 
   <logger name="org.apache"      level="ERROR" />
   <logger name="org.symphonyoss" level="ERROR" />
-  <logger name="org.jolokia"     level="DEBUG" />
+  <logger name="org.jolokia"     level="INFO" />
   <logger name="org.symphonyoss.client.impl.SymphonyBasicClient" level="INFO" />
   <root level="INFO">
     <appender-ref ref="FILE" />
