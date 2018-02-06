@@ -182,7 +182,7 @@ objects:
   metadata:
     labels:
       app: ${BOT_NAME}
-    name: jolokia-service
+    name: github-chatops-jolokia
   spec:
     type: NodePort
     selector:
@@ -202,4 +202,4 @@ objects:
   spec:
     to:
       kind: Service
-      name: jolokia-service
+      name: github-chatops-jolokia
