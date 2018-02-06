@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<restrict>
+    <remote>
+        <host>localhost</host>
+        <host>10.0.0.0/8</host>
+    </remote>
+
+     <http>
+        <method>get</method>
+    </http>
+
+    <commands>
+        <command>exec</command>
+    </commands>
+
+    <allow>
+        <mbean>
+            <name>org.symphonyoss.client:type=ClientCheckMBean</name>
+            <operation>isUp</operation>
+        </mbean>
+    </allow>
+</restrict>

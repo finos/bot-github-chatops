@@ -21,10 +21,11 @@
       <b>Created by:</b> <a href="${issue.user.html_url}">${issue.user.login}</a> on ${issue.created_at?datetime.iso?string["yyyy-MM-dd h:mm:ssa z"]} ❖
       <b>Last updated:</b> ${issue.updated_at?datetime.iso?string["yyyy-MM-dd h:mm:ssa z"]}[#if issue.closed_by??] ❖
       <b>Closed by:</b> <a href="${issue.closed_by.html_url}">${issue.closed_by.login}</a> on ${issue.closed_at?datetime.iso?string["yyyy-MM-dd h:mm:ssa z"]}[/#if]
-[#if issue.body??]
-      <br/>${issue.body}
-[/#if]
     </p>
+[#if issue.body??]
+    <p><b>Description:</b> ${issue.body}</p>
+[/#if]
+    <p><b>Add Comment Command:</b> ac ${repoName} ${issue.number} [COMMENT TEXT HERE]</p>
 [#if issue.comments > 0 && issue.comment_data??]
     <p><i>Click to see ${issue.comments} comments</i></p>
 [/#if]

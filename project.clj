@@ -15,7 +15,7 @@
 ; limitations under the License.
 ;
 
-(def jackson-version "2.9.3")
+(def jackson-version "2.9.4")
 
 (defproject org.symphonyoss.symphony/bot-github-chatops "0.1.0-SNAPSHOT"
   :description      "A bot that uses ChatOps techniques to allow a firm employee to interact with GitHub issues and PRs in the symphonyoss organisation's repositories, via CLI-esque interactions with the bot."
@@ -25,11 +25,12 @@
                      :url                     "http://www.apache.org/licenses/LICENSE-2.0"}
   :min-lein-version "2.8.1"
   :repositories     [["sonatype-snapshots" {:url "https://oss.sonatype.org/content/groups/public" :snapshots true}]
-                     ["jitpack"            {:url "https://jitpack.io"}]]
+                    ["jitpack" "https://jitpack.io"]]
   :plugins          [
                       [org.noisesmith/git-info-edn "0.2.1"]
                     ]
   :dependencies     [
+                      [com.github.maoo.symphony-java-client/symphony-client "mbeans-rc-1" :exclusions [org.slf4j/slf4j-log4j12]]
                       [org.clojure/clojure                   "1.9.0"]
                       [org.apache.commons/commons-lang3      "3.7"]
                       [aero                                  "1.1.2"]
@@ -41,8 +42,8 @@
                       [org.slf4j/jcl-over-slf4j              "1.7.25"]
                       [org.slf4j/log4j-over-slf4j            "1.7.25"]
                       [org.slf4j/jul-to-slf4j                "1.7.25"]
-                      [org.jolokia/jolokia-jvm               "1.3.7"]
-                      [org.jolokia/jolokia-jvm               "1.3.7" :classifier "agent"]
+                      [org.jolokia/jolokia-jvm               "1.4.0"]
+                      [org.jolokia/jolokia-jvm               "1.4.0" :classifier "agent"]
                       [clj-time                              "0.14.2"]
                       [com.github.grinnbearit/freemarker-clj "-SNAPSHOT"]
                       [irresponsible/tentacles               "0.6.1"]
