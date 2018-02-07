@@ -25,12 +25,11 @@
                      :url                     "http://www.apache.org/licenses/LICENSE-2.0"}
   :min-lein-version "2.8.1"
   :repositories     [["sonatype-snapshots" {:url "https://oss.sonatype.org/content/groups/public" :snapshots true}]
-                    ["jitpack" "https://jitpack.io"]]
+                     ["jitpack" "https://jitpack.io"]]
   :plugins          [
                       [org.noisesmith/git-info-edn "0.2.1"]
                     ]
   :dependencies     [
-                      [com.github.maoo.symphony-java-client/symphony-client "mbeans-rc-1" :exclusions [org.slf4j/slf4j-log4j12]]
                       [org.clojure/clojure                   "1.9.0"]
                       [org.apache.commons/commons-lang3      "3.7"]
                       [aero                                  "1.1.2"]
@@ -47,9 +46,11 @@
                       [clj-time                              "0.14.2"]
                       [com.github.grinnbearit/freemarker-clj "-SNAPSHOT"]
                       [irresponsible/tentacles               "0.6.1"]
-                      [org.symphonyoss/clj-symphony          "0.3.0" :exclusions [org.clojure/clojure
-                                                                                  org.slf4j/slf4j-log4j12]]
-
+                      ; [org.symphonyoss/clj-symphony          "0.4.0-SNAPSHOT"
+                      [com.github.maoo/clj-symphony          "mbeans-rc-1"
+                        :exclusions [
+                          org.clojure/clojure
+                          org.slf4j/slf4j-log4j12]]
                       ; The following dependencies are inherited but have conflicting versions, so we "pin" the versions here
                       [com.fasterxml.jackson.core/jackson-core                      ~jackson-version]
                       [com.fasterxml.jackson.core/jackson-databind                  ~jackson-version]
