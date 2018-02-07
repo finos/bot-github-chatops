@@ -101,6 +101,8 @@ objects:
           resources: {}
           terminationMessagePath: /dev/termination-log
           env:
+          - name: JOLOKIA_HOST
+            value: "*"
           - name: RUN_COMMAND
             value: "java -jar /opt/openshift/bot-github-chatops-standalone.jar"
           - name: SESSIONAUTH_URL
