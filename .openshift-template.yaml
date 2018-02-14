@@ -90,12 +90,19 @@ objects:
           - containerPort: 8778
             name: jolokia
             protocol: TCP
-          # livenessProbe:
-          #   exec:
-          #     command:
+          readinessProbe:
+            httpGet:
+              path: /jolokia/exec/org.symphonyoss.client:type=ClientCheckMBean/isUp
+              port: 8778
+          livenessProbe:
+            httpGet:
+              path: /jolokia/exec/org.symphonyoss.client:type=ClientCheckMBean/isUp
+              port: 8778
           resources: {}
           terminationMessagePath: /dev/termination-log
           env:
+          - name: JOLOKIA_HOST
+            value: "*"
           - name: RUN_COMMAND
             value: "java -jar /opt/openshift/bot-github-chatops-standalone.jar"
           - name: SESSIONAUTH_URL
@@ -177,12 +184,14 @@ objects:
   metadata:
     labels:
       app: ${BOT_NAME}
-    name: ${BOT_NAME}-jolokia
+    name: github-chatops-jolokia
   spec:
+    type: NodePort
     selector:
-      docker-registry: default
+      app: ${BOT_NAME}
     ports:
-    - nodePort: 0
+    - name: ${BOT_NAME}-jolokia-port
+      nodePort: 30778
       port: 8778
       protocol: TCP
       targetPort: 8778
@@ -195,4 +204,4 @@ objects:
   spec:
     to:
       kind: Service
-      name: ${BOT_NAME}-jolokia
+      name: github-chatops-jolokia

@@ -21,6 +21,7 @@ deploy:
     script: lein do git-info-edn, uberjar && mkdir -p target/oc && cp target/*-standalone.jar target/oc/ && ./deploy-to-openshift.sh $TRAVIS_BRANCH $TRAVIS_PULL_REQUEST
     on:
       all_branches: true
+      condition: $TRAVIS_BRANCH -eq "master" || $TRAVIS_BRANCH -eq "dev"
       jdk: oraclejdk8
   # Update Whitesource
   - provider: script

@@ -25,30 +25,36 @@
                      :url                     "http://www.apache.org/licenses/LICENSE-2.0"}
   :min-lein-version "2.8.1"
   :repositories     [["sonatype-snapshots" {:url "https://oss.sonatype.org/content/groups/public" :snapshots true}]
-                     ["jitpack"            {:url "https://jitpack.io"}]]
+                     ["jitpack" "https://jitpack.io"]]
   :plugins          [
                       [org.noisesmith/git-info-edn "0.2.1"]
                     ]
   :dependencies     [
-                      [org.clojure/clojure                   "1.9.0"]
-                      [org.apache.commons/commons-lang3      "3.7"]
-                      [aero                                  "1.1.2"]
-                      [mount                                 "0.1.11"]
-                      [org.clojure/tools.cli                 "0.3.5"]
-                      [org.clojure/tools.logging             "0.4.0"]
-                      [org.clojure/core.memoize              "0.5.9"]
-                      [ch.qos.logback/logback-classic        "1.2.3"]
-                      [org.slf4j/jcl-over-slf4j              "1.7.25"]
-                      [org.slf4j/log4j-over-slf4j            "1.7.25"]
-                      [org.slf4j/jul-to-slf4j                "1.7.25"]
-                      [org.jolokia/jolokia-jvm               "1.4.0"]
-                      [org.jolokia/jolokia-jvm               "1.4.0" :classifier "agent"]
-                      [clj-time                              "0.14.2"]
-                      [com.github.grinnbearit/freemarker-clj "-SNAPSHOT"]
-                      [irresponsible/tentacles               "0.6.1"]
-                      [org.symphonyoss/clj-symphony          "0.3.0" :exclusions [org.clojure/clojure
-                                                                                  org.slf4j/slf4j-log4j12]]
-
+                      ; TODO - this SNAPSHOT dependency is temporary and should not make it to master
+                      [org.symphonyoss.symphony/symphony-client  "1.1.3-SNAPSHOT"
+                        :exclusions [org.slf4j/slf4j-log4j12]]
+                      [org.clojure/clojure                       "1.9.0"]
+                      [org.apache.commons/commons-lang3          "3.7"]
+                      [aero                                      "1.1.2"]
+                      [mount                                     "0.1.11"]
+                      [org.clojure/tools.cli                     "0.3.5"]
+                      [org.clojure/tools.logging                 "0.4.0"]
+                      [org.clojure/core.memoize                  "0.5.9"]
+                      [ch.qos.logback/logback-classic            "1.2.3"]
+                      [org.slf4j/jcl-over-slf4j                  "1.7.25"]
+                      [org.slf4j/log4j-over-slf4j                "1.7.25"]
+                      [org.slf4j/jul-to-slf4j                    "1.7.25"]
+                      [org.jolokia/jolokia-jvm                   "1.4.0"]
+                      [org.jolokia/jolokia-jvm                   "1.4.0" :classifier "agent"]
+                      [clj-time                                  "0.14.2"]
+                      [com.github.grinnbearit/freemarker-clj     "-SNAPSHOT"]
+                      [irresponsible/tentacles                   "0.6.1"]
+                      [org.symphonyoss/clj-symphony              "0.3.0"
+                        :exclusions [
+                          org.clojure/clojure
+                          org.slf4j/slf4j-log4j12
+                          ; TODO - this exclusion is temporary and should not make it to master
+                          org.symphonyoss.symphony/symphony-client]]
                       ; The following dependencies are inherited but have conflicting versions, so we "pin" the versions here
                       [com.fasterxml.jackson.core/jackson-core                      ~jackson-version]
                       [com.fasterxml.jackson.core/jackson-databind                  ~jackson-version]

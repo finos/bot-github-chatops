@@ -11,11 +11,14 @@ if [[ $BRANCH_NAME =~ master ]]; then
 
 elif [[ $BRANCH_NAME =~ dev ]]; then
 	# Reset Openshift env on every build, for testing purposes
-	export OC_DELETE_LABEL="app=bot-github-chatops-dev"
+	# export OC_DELETE_LABEL="app=bot-github-chatops-dev"
 	export SYMPHONY_POD_HOST="foundation-dev.symphony.com"
 	export SYMPHONY_API_HOST="foundation-dev-api.symphony.com"
     export BOT_NAME="bot-github-chatops-dev"
     export OC_PROJECT_NAME="ssf-dev"
+else
+	echo "Skipping deployment for branch $BRANCH_NAME"
+	exit 0
 fi
 
 export OC_BINARY_FOLDER="./target/oc"
