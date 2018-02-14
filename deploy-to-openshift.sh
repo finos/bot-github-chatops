@@ -16,6 +16,9 @@ elif [[ $BRANCH_NAME =~ dev ]]; then
 	export SYMPHONY_API_HOST="foundation-dev-api.symphony.com"
     export BOT_NAME="bot-github-chatops-dev"
     export OC_PROJECT_NAME="ssf-dev"
+else
+	echo "Skipping deployment for branch $BRANCH_NAME"
+	exit 0
 fi
 
 export OC_BINARY_FOLDER="./target/oc"
