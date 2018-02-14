@@ -90,14 +90,14 @@ objects:
           - containerPort: 8778
             name: jolokia
             protocol: TCP
-          # readinessProbe:
-          #   httpGet:
-          #     path: /jolokia/exec/org.symphonyoss.client:type=ClientCheckMBean/isUp
-          #     port: jolokia
-          # livenessProbe:
-          #   httpGet:
-          #     path: /jolokia/exec/org.symphonyoss.client:type=ClientCheckMBean/isUp
-          #     port: jolokia
+          readinessProbe:
+            httpGet:
+              path: /jolokia/exec/org.symphonyoss.client:type=ClientCheckMBean/isUp
+              port: 8778
+          livenessProbe:
+            httpGet:
+              path: /jolokia/exec/org.symphonyoss.client:type=ClientCheckMBean/isUp
+              port: 8778
           resources: {}
           terminationMessagePath: /dev/termination-log
           env:
