@@ -25,7 +25,7 @@
                      :url                     "http://www.apache.org/licenses/LICENSE-2.0"}
   :min-lein-version "2.8.1"
   :repositories     [["sonatype-snapshots" {:url "https://oss.sonatype.org/content/groups/public" :snapshots true}]
-                     ["jitpack" "https://jitpack.io"]]
+                     ["jitpack"            {:url "https://jitpack.io"                             :snapshots true}]]
   :plugins          [
                       [org.noisesmith/git-info-edn "0.2.1"]
                     ]
