@@ -31,7 +31,7 @@
                     ]
   :dependencies     [
                       ; TODO - this SNAPSHOT dependency is temporary and should not make it to master
-                      [org.symphonyoss.symphony/symphony-client  "1.1.3-SNAPSHOT"
+                      [org.symphonyoss.symphony/symphony-client  "1.1.3"
                         :exclusions [org.slf4j/slf4j-log4j12]]
                       [org.clojure/clojure                       "1.9.0"]
                       [org.apache.commons/commons-lang3          "3.7"]
@@ -39,7 +39,7 @@
                       [mount                                     "0.1.12"]
                       [org.clojure/tools.cli                     "0.3.5"]
                       [org.clojure/tools.logging                 "0.4.0"]
-                      [org.clojure/core.memoize                  "0.5.9"]
+                      [org.clojure/core.memoize                  "0.7.1"]
                       [ch.qos.logback/logback-classic            "1.2.3"]
                       [org.slf4j/jcl-over-slf4j                  "1.7.25"]
                       [org.slf4j/log4j-over-slf4j                "1.7.25"]
