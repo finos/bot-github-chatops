@@ -30,9 +30,6 @@
                       [org.noisesmith/git-info-edn "0.2.1"]
                     ]
   :dependencies     [
-                      ; TODO - this SNAPSHOT dependency is temporary and should not make it to master
-                      [org.symphonyoss.symphony/symphony-client  "1.1.3"
-                        :exclusions [org.slf4j/slf4j-log4j12]]
                       [org.clojure/clojure                       "1.9.0"]
                       [org.apache.commons/commons-lang3          "3.7"]
                       [aero                                      "1.1.3"]
@@ -49,12 +46,8 @@
                       [clj-time                                  "0.14.2"]
                       [com.github.grinnbearit/freemarker-clj     "-SNAPSHOT"]
                       [irresponsible/tentacles                   "0.6.1"]
-                      [org.symphonyoss/clj-symphony              "0.3.0"
-                        :exclusions [
-                          org.clojure/clojure
-                          org.slf4j/slf4j-log4j12
-                          ; TODO - this exclusion is temporary and should not make it to master
-                          org.symphonyoss.symphony/symphony-client]]
+                      [org.symphonyoss/clj-symphony              "0.4.0" :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
+
                       ; The following dependencies are inherited but have conflicting versions, so we "pin" the versions here
                       [com.fasterxml.jackson.core/jackson-core                      ~jackson-version]
                       [com.fasterxml.jackson.core/jackson-databind                  ~jackson-version]
