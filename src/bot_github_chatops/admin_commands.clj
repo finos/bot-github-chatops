@@ -23,6 +23,7 @@
             [mount.core                    :as mnt :refer [defstate]]
             [clj-time.core                 :as tm]
             [clj-time.format               :as tf]
+            [clj-symphony.connect          :as syc]
             [clj-symphony.user             :as syu]
             [clj-symphony.message          :as sym]
             [clj-symphony.stream           :as sys]
@@ -43,7 +44,8 @@
                        (tem/render "admin/status.ftl"
                                    { :now              (u/date-as-string now)
                                      :podName          (:company cnxn/bot-user)
-                                     :podVersion       cnxn/symphony-version
+                                     :podVersion       (syc/pod-version cnxn/symphony-connection)
+                                     :agentVersion     (syc/agent-version cnxn/symphony-connection)
                                      :clojureVersion   (clojure-version)
                                      :javaVersion      (System/getProperty "java.version")
                                      :javaArchitecture (System/getProperty "os.arch")
