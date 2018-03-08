@@ -79,6 +79,24 @@
                                                 tmp-zip-file)
     (io/delete-file tmp-zip-file true)))
 
+(defn- set-log-level!
+  "Sets the logging level for the bot (to one of ALL, TRACE, DEBUG, INFO, WARN, ERROR, or OFF)."
+  [stream-id text]
+  (if-let [level (second (sym/tokens text))]
+    (do
+      (cfg/set-log-level! level)
+      (sym/send-message! cnxn/symphony-connection
+                         stream-id
+                         (str "<messageML>Log level now " (s/upper-case level) ".</messageML>")))
+    (sym/send-message! cnxn/symphony-connection
+                       stream-id
+                       (str "<messageML>Please provide a log level; one of: ALL, TRACE, DEBUG, INFO, WARN, ERROR, or OFF.</messageML>"))))
+
+(defn- reset-log-level!
+  "Resets the bot's logging level to the default (INFO)."
+  [stream-id _]
+  (set-log-level! stream-id "setlogging info"))
+
 (defn- reload-config!
   "Reloads the configuration of the github-chatops bot. The bot will be temporarily unavailable during this operation."
   [stream-id _]
@@ -108,12 +126,14 @@
 ; Table of commands - each of these must be a function of 2 args (strean-id, message)
 (def ^:private commands
   {
-    "status" #'status!
-    "config" #'config!
-    "logs"   #'logs!
-    "reload" #'reload-config!
-    "gc"     #'garbage-collect!
-    "help"   #'help!
+    "status"       #'status!
+    "config"       #'config!
+    "logs"         #'logs!
+    "setlogging"   #'set-log-level!
+    "resetlogging" #'reset-log-level!
+    "reload"       #'reload-config!
+    "gc"           #'garbage-collect!
+    "help"         #'help!
   })
 
 (defn- help!
