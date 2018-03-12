@@ -30,9 +30,6 @@
                        _    (log/info (str "Connected to Symphony pod " (:company bot) " v" (syc/version cnxn) " as " (:display-name bot) " (" (:email-address bot) ")"))]
                     cnxn))
 
-(defstate symphony-version
-          :start (syc/version symphony-connection))
-
 (defstate bot-user
           :start (syu/user symphony-connection))
 

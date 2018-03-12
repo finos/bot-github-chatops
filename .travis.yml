@@ -8,7 +8,7 @@ jdk:
 env:
  global:
   # Encrypted OC_TOKEN for deploying to OpenShift
-  - secure: "Yh4z/Za0ZNDWlHymxYCe9MmMVhg5uZ0D23L8APfH24IRnqRZ7ephfq6xC6fiFsI99Bdy9vmut0tPy6MgP711KkiFr8UE5XzgIikaIt/sl38t0jBz3aGBWDfcelbfSILHQwirUM0UWHtJVdqY5Prcr0hy44VDrF5GVUZ9aXK/mPjN4BsQrwREVO2l7LX+Osx2geSokNpT1P6xb+2sFgHkxYuMBNtoR+EzxBRWowlhjaCm9o+CiQX1cpOjeDSgL/VGV0Q3wrpo2QNHte0B0C3lwqwZkHZzfT8nILXPbJQTwdshi5Wigt0TVP5Gpjg1umW0PMeyk63ZPj4AUj9HaczMZ5fAYELodI0G/eDLpYvVphqJlmupikOVhaclvVp2XZxiUvskexi0gCAkxK5Xt1o99drVNmlz+KjYeKI5y5ZUnoiUjpXtXDAr2m56es6OgI8n50xkNAMbXVy1vgdTCXXuJP5ibH8aImeGEr32jlbpQk/0LB75VPG74RtKfHc83ZqryyyAee5KuM5sZZdi53GIet/CluMiywsT/JQbNGHbtuWVGDsVs9sm2mYiViVpCsDThKRQwa5ihz7sdxpqSvoHsaYQ4lgJiQK3UHQWlcYsrU7p4NAqJ5SdegD25+bpCdDzY0aBuNvtARIeCRbiK6IkvFsbK4RpNjX9DmsXxmFlYIg="
+  - secure: "XIfnH0tvDJWsJkAAvQrzrx8MAFFxIRqe+OCaAS6v79v02GtC3HGOD7S/eb50qm/BfkGbXxYSfevIEe/UCSBI2JNc0Z+ITq42/xw+ObBlABcyEdhGAumHf6K+O4hQaJmnavEMXMOTq8Rcv7Dy6dQQ+2Mua/lYTNTGzknVorJDeELDKizL1h5249CmoOAcLk9av21otAC7eAkiquz6nJlPD4cIUa6dkbdIZzvwKfVwg1QMitNTVEV1SSii9iY/2HS3i+c94twgJY/73dm3dAxl1QX2W59eZ06n53hom2i58X33QsSqnYGAEAKehtjghD+474FlKMnAlg1n03BNvClXL1pn/C247H6qfyjhZqjbhcb4NBs9r1cRH6ff/ZPBDfG0q6pZbIr+G1AMMxI0wfVoljZ7HYiq//1JGBN3ALFkf50qXXmriOQWE7t9/LCXp4gUwsOIqsMyBazYYJjuGkW8t6zhzEpxkfV4nD75iBS5C5BGHTnMmPm/iYGEdteF9qeRAsnQqUNTiOfBT5aI3UCXokm4MlmoAsNcpCOTyh1ZuSCKxukprofIObXcivLry6S9TcX01AozVIh7l79E6hRQEBb7NV8FMs3k9uoH8wJDoGMrWbukbbd/7y3r6FH7aqktNAS4v+Z+hCqwXB1mqr5RLG01VT6BgOYeFixdEPniQ50="
   # Encrypted WHITESOURCE_TOKEN for updating Whitesource licensing information
   - secure: "Jft9IV9gern2M28DDTZ9sHBZS0nwWZ5GGYMM6dRQm2IRq8/wbpZuow9YHh0+8ZDSdp72g6SZlq7/B49ZepL979T+M/i9S4ialI9foCqd6ZHwgl/vPiSUS3wH8G2JoGCujk+iuCU2UxFL0Wc4hwqP+G6ZIB7XTyIfu4h/2WQWrTIFIWSHt4ZV7Yymegz3mO7HdUErRNUTcxCKYpLRJat0JMlBuSQjvMKAtUnjzd+nnrZ33T4DO0OOu/U26Sn7ofeDWjycGyXAo5/OR0TW98K3fK1jLsdaembwmjAhx9MQpOeHODQTEwjzR72PIWWqMxNapFWxpgPbIDFM1WaLEWymFyOgysiqc6OFDt8h0wPFgceapSP0dcBpeCvG8OmPP2S2W/5vpDV00HykHqzBje4XjEDT1hdrZVF63VItB8zJJKEO/CbizeDMfwJKWN1synIAIZKmtschhFEILbr0CBC9oOpU13c3oWb7wKmdHG2iRTfPxyzQb2J7BpW/7XS5P42Yte6dQWQtECZidwdRWUOTuT8qZAGJ4VFqvys1bxQnWM+NMwxPPX+q9JhXRngliDJleVtlENWd2UVXUBIogy4ousbf68Ll4L6delKb9xmItFn3ydnhuBzJaWOe7vpfJhN2L2uyoZXCmuFl4K5mzWAMO78AeHIUup/zY7YwDEjiD+I="
 
@@ -21,6 +21,7 @@ deploy:
     script: lein do git-info-edn, uberjar && mkdir -p target/oc && cp target/*-standalone.jar target/oc/ && ./deploy-to-openshift.sh $TRAVIS_BRANCH $TRAVIS_PULL_REQUEST
     on:
       all_branches: true
+      condition: $TRAVIS_BRANCH -eq "master" || $TRAVIS_BRANCH -eq "dev"
       jdk: oraclejdk8
   # Update Whitesource
   - provider: script
