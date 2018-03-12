@@ -15,6 +15,11 @@ parameters:
   description: The hostname serving the Symphony API endpoints
   displayName: Symphony Pod hostname
   required: true
+# Must be within 30000-32767 range - read more on https://docs.openshift.com/container-platform/latest/dev_guide/expose_service/expose_internal_ip_nodeport.html
+- name: JOLOKIA_NODE_PORT
+  description: The port used to expose the Jolokia service
+  displayName: The Jolokia external port
+  required: true
 objects:
 - apiVersion: v1
   kind: ImageStream
@@ -191,7 +196,7 @@ objects:
       app: ${BOT_NAME}
     ports:
     - name: ${BOT_NAME}-jolokia-port
-      nodePort: 30778
+      nodePort: ${JOLOKIA_NODE_PORT}
       port: 8778
       protocol: TCP
       targetPort: 8778
