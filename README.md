@@ -3,7 +3,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/symphonyoss/bot-github-chatops.svg)](http://isitmaintained.com/project/symphonyoss/bot-github-chatops "Average time to resolve an issue")
 [![Dependencies Status](https://versions.deps.co/symphonyoss/bot-github-chatops/status.svg)](https://versions.deps.co/symphonyoss/bot-github-chatops)
 [![License](https://img.shields.io/github/license/symphonyoss/bot-github-chatops.svg)](https://github.com/symphonyoss/bot-github-chatops/blob/master/LICENSE)
-[![Symphony Software Foundation - Incubating](https://cdn.rawgit.com/symphonyoss/contrib-toolbox/master/images/ssf-badge-incubating.svg)](https://symphonyoss.atlassian.net/wiki/display/FM/Incubating)
+[![FINOS - Incubating](https://cdn.rawgit.com/finos/contrib-toolbox/master/images/badge-incubating.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Incubating)
 
 # bot-github-chatops
 
@@ -42,7 +42,7 @@ The bot will provide you with help by asking it for `help`:
 
 ## License
 
-Copyright © 2017 Symphony Software Foundation
+Copyright 2017 Fintech Open Source Foundation
 
 Distributed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
