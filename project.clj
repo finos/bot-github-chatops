@@ -15,7 +15,7 @@
 ; limitations under the License.
 ;
 
-(def jackson-version "2.9.4")
+(def jackson-version "2.9.5")
 (def jersey-version  "2.25.1")     ; Note: upgrading past 2.25.x breaks Jackson
 
 (defproject org.symphonyoss.symphony/bot-github-chatops "0.1.0-SNAPSHOT"
@@ -63,7 +63,7 @@
                       [org.glassfish.jersey.core/jersey-client                      ~jersey-version]
                       [org.glassfish.jersey.core/jersey-common                      ~jersey-version]
                       [org.glassfish.jersey.media/jersey-media-json-jackson         ~jersey-version]
-                      [clj-http                                                     "3.8.0"]
+                      [clj-http                                                     "3.9.0"]
                       [joda-time/joda-time                                          "2.9.9"]
                       [org.hamcrest/hamcrest-core                                   "1.3"]
                     ]
