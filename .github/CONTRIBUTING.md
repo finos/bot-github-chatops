@@ -6,9 +6,9 @@ A CLA is a document that specifies how a project is allowed to use your
 contribution; they are commonly used in many open source projects.
 
 **_All_ contributions to _all_ projects hosted by the
-[Symphony Software Foundation](https://symphony.foundation/) must be made with
-a [Foundation CLA](https://symphonyoss.atlassian.net/wiki/display/FM/Legal+Requirements#LegalRequirements-ContributorLicenseAgreement)
-in place, and there are [additional legal requirements](https://symphonyoss.atlassian.net/wiki/display/FM/Legal+Requirements) that must also be met.**
+[Fintech Open Source Foundation](https://www.finos.org/) must be made with
+a [Foundation CLA](https://finosfoundation.atlassian.net/wiki/spaces/FINOS/pages/75530375/Legal+Requirements#LegalRequirements-ContributorLicenseAgreement)
+in place, and there are [additional legal requirements](https://finosfoundation.atlassian.net/wiki/spaces/FINOS/pages/75530375/Legal+Requirements) that must also be met.**
 
 As a result, PRs submitted to the bot-github-chatops project cannot be accepted until you have a CLA in place with the Foundation.
 
