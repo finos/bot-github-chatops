@@ -36,7 +36,7 @@
                       [aero                                      "1.1.3"]
                       [mount                                     "0.1.12"]
                       [org.clojure/tools.cli                     "0.3.7"]
-                      [org.clojure/tools.logging                 "0.4.0"]
+                      [org.clojure/tools.logging                 "0.4.1"]
                       [org.clojure/core.memoize                  "0.7.1"]
                       [ch.qos.logback/logback-classic            "1.2.3"]
                       [org.slf4j/jcl-over-slf4j                  "1.7.25"]
