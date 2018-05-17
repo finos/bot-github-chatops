@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/github/license/symphonyoss/bot-github-chatops.svg)](https://github.com/symphonyoss/bot-github-chatops/blob/master/LICENSE)
 [![FINOS - Incubating](https://cdn.rawgit.com/finos/contrib-toolbox/master/images/badge-incubating.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Incubating)
 
+<img align="right" width="40%" src="https://www.finos.org/hubfs/FINOS/finos-logo/FINOS_Icon_Wordmark_Name_RGB_horizontal.png">
+
 # bot-github-chatops
 
 A [Symphony](http://www.symphony.com/) bot that uses ChatOps techniques to allow a firm employee to interact in a
