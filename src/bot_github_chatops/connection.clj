@@ -33,13 +33,20 @@
 (defstate bot-user
           :start (syu/user symphony-connection))
 
+(defn lookup-user-and-warn-if-invalid
+  [email-address]
+  (let [result (syu/user symphony-connection email-address)]
+    (if (nil? result)
+      (log/warn (str "Configured admin email address " email-address " is invalid - there is no user in Symphony with that email address.")))
+    result))
+
 (defstate admins
-          :start (let [result (map (partial syu/user symphony-connection) (:admin-emails cfg/config))]
+          :start (let [result (remove nil? (map lookup-user-and-warn-if-invalid (:admin-emails cfg/config)))]
                    (if (pos? (count result))
                      (do
                        (log/info "Admins:" (s/join ", " (map :email-address result)))
                        result)
-                     (log/info "No admins configured - Admin ChatOps interface will not be available."))))
+                     (log/info "No admins configured - ChatOps interface will not be available."))))
 
 (defn is-admin?
   "Is the given user an admin of the bot?"
