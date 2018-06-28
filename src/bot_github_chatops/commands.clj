@@ -229,5 +229,5 @@
   "Process any commands in the given message.  Returns true if a command (or help) was displayed, false otherwise."
   [from-user-id stream-id text entity-data]
   (if-not (s/blank? text)
-    (boolean (some identity (doall (map (partial process-command! from-user-id stream-id text (sym/to-plain-text text)) (keys commands)))))
+    (boolean (some identity (doall (map (partial process-command! from-user-id stream-id text (s/trim (sym/to-plain-text text))) (keys commands)))))
     false))
