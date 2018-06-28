@@ -15,7 +15,7 @@
 ; limitations under the License.
 ;
 
-(def jackson-version "2.9.4")
+(def jackson-version "2.9.5")
 (def jersey-version  "2.25.1")     ; Note: upgrading past 2.25.x breaks Jackson
 
 (defproject org.symphonyoss.symphony/bot-github-chatops "0.1.0-SNAPSHOT"
@@ -36,18 +36,19 @@
                       [aero                                      "1.1.3"]
                       [mount                                     "0.1.12"]
                       [org.clojure/tools.cli                     "0.3.7"]
-                      [org.clojure/tools.logging                 "0.4.0"]
+                      [org.clojure/tools.logging                 "0.4.1"]
                       [org.clojure/core.memoize                  "0.7.1"]
                       [ch.qos.logback/logback-classic            "1.2.3"]
                       [org.slf4j/jcl-over-slf4j                  "1.7.25"]
                       [org.slf4j/log4j-over-slf4j                "1.7.25"]
                       [org.slf4j/jul-to-slf4j                    "1.7.25"]
-                      [org.jolokia/jolokia-jvm                   "1.5.0"]
-                      [org.jolokia/jolokia-jvm                   "1.5.0" :classifier "agent"]
-                      [clj-time                                  "0.14.3"]
+                      [org.jolokia/jolokia-jvm                   "1.6.0"]
+                      [org.jolokia/jolokia-jvm                   "1.6.0" :classifier "agent"]
+                      [clj-time                                  "0.14.4"]
                       [com.github.grinnbearit/freemarker-clj     "-SNAPSHOT"]
-                      [irresponsible/tentacles                   "0.6.1"]
-                      [org.symphonyoss/clj-symphony              "0.7.0" :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
+                      [irresponsible/tentacles                   "0.6.2"]
+                      [org.clojars.pmonks/clj-2253               "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]
+                      [org.symphonyoss/clj-symphony              "0.8.0"          :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
 
                       ; The following dependencies are inherited but have conflicting versions, so we "pin" the versions here
                       [com.fasterxml.jackson.core/jackson-core                      ~jackson-version]
@@ -63,8 +64,8 @@
                       [org.glassfish.jersey.core/jersey-client                      ~jersey-version]
                       [org.glassfish.jersey.core/jersey-common                      ~jersey-version]
                       [org.glassfish.jersey.media/jersey-media-json-jackson         ~jersey-version]
-                      [clj-http                                                     "3.8.0"]
-                      [joda-time/joda-time                                          "2.9.9"]
+                      [clj-http                                                     "3.9.0"]
+                      [joda-time/joda-time                                          "2.10"]
                       [org.hamcrest/hamcrest-core                                   "1.3"]
                     ]
   :profiles         {:dev {:dependencies [[midje         "1.9.1"]]
