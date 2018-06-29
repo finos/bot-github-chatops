@@ -18,9 +18,9 @@
 (def jackson-version "2.9.5")
 (def jersey-version  "2.25.1")     ; Note: upgrading past 2.25.x breaks Jackson
 
-(defproject org.symphonyoss.symphony/bot-github-chatops "0.1.0-SNAPSHOT"
-  :description      "A bot that uses ChatOps techniques to allow a firm employee to interact with GitHub issues and PRs in the symphonyoss organisation's repositories, via CLI-esque interactions with the bot."
-  :url              "https://github.com/symphonyoss/bot-github-chatops"
+(defproject org.finos.osr/bot-github-chatops "0.1.0-SNAPSHOT"
+  :description      "A bot that uses ChatOps techniques to allow a firm employee to interact with GitHub issues and PRs in FINOS repositories, via CLI-esque interactions with the bot."
+  :url              "https://github.com/finos-osr/bot-github-chatops"
   :license          {:spdx-license-identifier "Apache-2.0"
                      :name                    "Apache License, Version 2.0"
                      :url                     "http://www.apache.org/licenses/LICENSE-2.0"}
@@ -47,8 +47,8 @@
                       [clj-time                                  "0.14.4"]
                       [com.github.grinnbearit/freemarker-clj     "-SNAPSHOT"]
                       [irresponsible/tentacles                   "0.6.2"]
-                      [org.clojars.pmonks/clj-2253               "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]
-                      [org.symphonyoss/clj-symphony              "0.8.0"          :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
+                      [org.clojars.pmonks/clj-2253               "0.1.0" :exclusions [org.clojure/clojure]]
+                      [org.symphonyoss/clj-symphony              "0.8.0" :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
 
                       ; The following dependencies are inherited but have conflicting versions, so we "pin" the versions here
                       [com.fasterxml.jackson.core/jackson-core                      ~jackson-version]
