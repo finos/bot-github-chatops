@@ -17,7 +17,7 @@
     :token              #env GITHUB_TOKEN
     :login              [#env GITHUB_USERNAME #env GITHUB_PASSWORD]
 
-    :org                #or [#env GITHUB_ORG "symphonyoss"]
+    :orgs               #or [#env GITHUB_ORGS ["hadouken" "fdc3" "finos" "finos-fo" "finos-osr" "finos-plexus" "finos-voice" "symphonyoss"]]
     :mask-private-repos #boolean #or [#env MASK_PRIVATE_REPOS true]   ; Should the tool mask private repos it has access to?
     :masked-repos       #split [#env MASKED_REPOS "\\s*,\\s*"]        ; Other named repos the tool should mask (may be private or public)
   }
