@@ -119,7 +119,7 @@
                                             (try
                                               [true nil (doall (map (partial gh/issue repo-slug) issue-ids))]
                                               (catch Exception e
-                                                [false (str e " - Invalid repository (" repo-slug "), and/or issue numbers (" (s/join ", " raw-issue-ids) ").") nil]))
+                                                [false (str "Invalid repository (" repo-slug "), and/or issue numbers (" (s/join ", " raw-issue-ids) ").") nil]))
                                             [success error-message nil])
         message                           (tem/render "issue-details.ftl"
                                                       { :success      success
@@ -128,10 +128,10 @@
                                                         :issues       issues
                                                         :errorMessage error-message })]
     (sym/send-message! cnxn/symphony-connection
-                      stream-id
-                      message)))
+                       stream-id
+                       message)))
 
-                    
+
 (defn- add-comment!
   "Adds a comment to an issue in a given repository. The repository name must be supplied immediately after the command, followed by a single issue id, followed by the comment e.g. add-comment MyRepository 42 Can you please provide the log files?"
   [from-user-id stream-id _ words]
