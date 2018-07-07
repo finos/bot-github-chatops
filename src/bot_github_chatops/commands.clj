@@ -49,19 +49,19 @@
   "Lists issues for the given repository in the given state."
   [stream-id words summary command-name issue-filter]
   (let [arguments                      (rest words)
-        repo-name                      (first arguments)
-        [success error-message]        (if-not (s/blank? repo-name)
+        repo-slug                      (first arguments)
+        [success error-message]        (if-not (s/blank? repo-slug)
                                          [true  nil]
                                          [false "No repository was provided, but it is required."])
         [success error-message issues] (if success
                                          (try
-                                           [true nil (gh/issues repo-name issue-filter)]
+                                           [true nil (gh/issues repo-slug issue-filter)]
                                            (catch Exception e
-                                             [false (str "Invalid repository '" repo-name "'.") nil]))
+                                             [false (str "Invalid repository '" repo-slug "'.") nil]))
                                          [success error-message nil])
         message                        (tem/render "list-issues.ftl"
                                                    { :success      success
-                                                     :repoName     repo-name
+                                                     :repoSlug     repo-slug
                                                      :summary      summary
                                                      :commandName  command-name
                                                      :issues       issues
@@ -99,8 +99,8 @@
   "Displays details on one or more issues in a given repository. The repository name must be supplied immediately after the command, followed by one or more issue ids e.g. issue-details MyRepository 14 17 22"
   [_ stream-id _ words]
   (let [arguments                         (rest words)
-        repo-name                         (first arguments)
-        [success error-message]           (if-not (s/blank? repo-name)
+        repo-slug                         (first arguments)
+        [success error-message]           (if-not (s/blank? repo-slug)
                                             [true  nil]
                                             [false "No repository was provided, but it is required."])
         raw-issue-ids                     (rest arguments)
@@ -117,13 +117,13 @@
                                             [success error-message nil])
         [success error-message issues]    (if success
                                             (try
-                                              [true nil (doall (map (partial gh/issue repo-name) issue-ids))]
+                                              [true nil (doall (map (partial gh/issue repo-slug) issue-ids))]
                                               (catch Exception e
-                                                [false (str "Invalid repository (" repo-name "), and/or issue numbers (" (s/join ", " raw-issue-ids) ").") nil]))
+                                                [false (str "Invalid repository (" repo-slug "), and/or issue numbers (" (s/join ", " raw-issue-ids) ").") nil]))
                                             [success error-message nil])
         message                           (tem/render "issue-details.ftl"
                                                       { :success      success
-                                                        :repoName     repo-name
+                                                        :repoSlug     repo-slug
                                                         :issueIds     issue-ids
                                                         :issues       issues
                                                         :errorMessage error-message })]
@@ -136,8 +136,8 @@
   "Adds a comment to an issue in a given repository. The repository name must be supplied immediately after the command, followed by a single issue id, followed by the comment e.g. add-comment MyRepository 42 Can you please provide the log files?"
   [from-user-id stream-id _ words]
   (let [arguments                         (rest words)
-        repo-name                         (first arguments)
-        [success error-message]           (if-not (s/blank? repo-name)
+        repo-slug                         (first arguments)
+        [success error-message]           (if-not (s/blank? repo-slug)
                                             [true  nil]
                                             [false "No repository was provided, but it is required."])
         raw-issue-id                      (first (rest arguments))
@@ -158,18 +158,17 @@
                                                                                  { :displayName  (:display-name from-user)
                                                                                    :userId       from-user-id
                                                                                    :message      comment-text })]
-                                                  (gh/add-comment repo-name
+                                                  (gh/add-comment repo-slug
                                                                   issue-id
                                                                   github-comment)
                                                   [true nil])
                                                 (catch Exception e
-                                                  [false (str "Invalid repository (" repo-name "), and/or issue number (" raw-issue-id ").")]))
+                                                  [false (str "Invalid repository (" repo-slug "), and/or issue number (" raw-issue-id ").")]))
                                               [false "No comment was provided, but it is required."])
                                             [success error-message])
         message                           (tem/render "add-comment.ftl"
                                                       { :success      success
-                                                        :org          gh/org
-                                                        :repoName     repo-name
+                                                        :repoSlug     repo-slug
                                                         :issueId      issue-id
                                                         :errorMessage error-message })]
     (sym/send-message! cnxn/symphony-connection
