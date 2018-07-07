@@ -31,7 +31,7 @@
                    (throw (RuntimeException. "GitHub configuration is mandatory, but is missing."))))
 
 (defstate orgs
-          :start (:orgs github-config))
+          :start (seq (sort (:orgs github-config))))
 
 (defstate opts
           :start (into { :throw-exceptions true
@@ -55,16 +55,18 @@
           :start (if-let [from-config (seq (:masked-repos github-config))]
                    (set from-config)))
 
-(defn get-repo-org
-  "Returns the org of a repo (ie 'symphonyoss', given its slug, ie 'symphonyoss/contrib-toolbox'"
+(defn- get-repo-org
+  "Returns the org of a repo (ie 'symphonyoss', given its slug, ie 'symphonyoss/contrib-toolbox', or nil if the input is nil or blank."
   [repo-slug]
-  (first (s/split repo-slug #"/")))
+  (if-not (s/blank? repo-slug)
+    (first (s/split repo-slug #"/"))))
 
 (defn- get-repo-name
   "Returns the name of a repo (ie 'contrib-toolbox', given its slug, ie 'symphonyoss/contrib-toolbox'"
   [repo-slug]
-  (second (s/split repo-slug #"/")))
-  
+  (if-not (s/blank? repo-slug)
+    (second (s/split repo-slug #"/"))))
+
 (defn private-repo?
   "Is the given repository private?"
   [repo-slug]
@@ -87,7 +89,7 @@
 (defn repos
   "Lists the non-masked repositories in the configured org."
   []
-  (let [result (flatten (map #(tr/org-repos % opts) orgs))]
+  (let [result (mapcat #(tr/org-repos % opts) orgs)]
     (doall (remove #(masked-repo? (:full_name %)) result))))
 
 (defn issues
