@@ -36,7 +36,7 @@
 (def iso-date-formatter (:date-time tf/formatters))
 
 (defn- list-repos!
-  "Lists the GitHub repos the bot is able to interact with."
+  "Lists the GitHub repos the bot is able to interact with.  Note: the GitHub APIs behind this command are very slow."
   [_ stream-id _ _]
   (let [message (tem/render "list-repos.ftl"
                             { :repos (gh/repos) })]

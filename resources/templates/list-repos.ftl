@@ -5,7 +5,7 @@
 [#if repos?? && repos?size > 0]
   <table>
     <tr><th>Name</th><th>Description</th><th>List Open Issues Command</th></tr>
-  [#list repos?sort_by("name") as repo]
+  [#list repos?sort_by("full_name") as repo]
     <tr><td><a href="${repo.html_url}">${repo.full_name}</a></td><td>${repo.description!""}</td><td>loi ${repo.full_name}</td></tr>
   [/#list]
   </table>
