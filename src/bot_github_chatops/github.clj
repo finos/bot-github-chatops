@@ -30,11 +30,8 @@
                    result
                    (throw (RuntimeException. "GitHub configuration is mandatory, but is missing."))))
 
-(defstate org
-          :start (let [result (:org github-config)]
-                   (if-not (s/blank? result)
-                     result
-                     "symphonyoss")))
+(defstate orgs
+          :start (seq (sort (:orgs github-config))))
 
 (defstate opts
           :start (into { :throw-exceptions true
@@ -58,16 +55,31 @@
           :start (if-let [from-config (seq (:masked-repos github-config))]
                    (set from-config)))
 
+(defn- get-repo-org
+  "Returns the org of a repo (ie 'symphonyoss', given its slug, ie 'symphonyoss/contrib-toolbox', or nil if the input is nil or blank."
+  [repo-slug]
+  (if-not (s/blank? repo-slug)
+    (first (s/split repo-slug #"/"))))
+
+(defn- get-repo-name
+  "Returns the name of a repo (ie 'contrib-toolbox', given its slug, ie 'symphonyoss/contrib-toolbox'"
+  [repo-slug]
+  (if-not (s/blank? repo-slug)
+    (second (s/split repo-slug #"/"))))
+
 (defn private-repo?
   "Is the given repository private?"
-  [repo-name]
-  (:private (tr/specific-repo org repo-name opts)))
+  [repo-slug]
+  (let [org       (get-repo-org repo-slug)
+        repo-name (get-repo-name repo-slug)]
+    (:private (tr/specific-repo org repo-name opts))))
 
 (defn- masked-repo-fn?
   "Is the given repository masked?"
-  [repo-name]
-  (or (contains? masked-repos repo-name)
-      (and mask-private-repos? (private-repo? repo-name))))
+  [repo-slug]
+    (or (contains? masked-repos repo-slug)
+        (and mask-private-repos? (private-repo? repo-slug))))
+
 (def ^:private masked-repo? (memo/lru masked-repo-fn? :lru/threshold 500))   ; Memoize so as to reduce GH API calls
 
 ; We do this so that configuration reloads via the bot's admin command interface force a flush of the masked-repo? cache.
@@ -77,8 +89,8 @@
 (defn repos
   "Lists the non-masked repositories in the configured org."
   []
-  (let [result (tr/org-repos org opts)]
-    (doall (remove #(masked-repo? (:name %)) result))))
+  (let [result (mapcat #(tr/org-repos % opts) orgs)]
+    (doall (remove #(masked-repo? (:full_name %)) result))))
 
 (defn issues
   "Lists issues in the given repo, optionally including these filtering and sorting options:
@@ -92,25 +104,29 @@
     sort-field     - 'created', 'updated', or 'comments'
     sort-direction - 'asc' or 'desc'
     since          - issues updated since this date (formatted as an ISO 8601 string: 'YYYY-MM-DDTHH:MM:SSZ')"
-  ([repo-name] (issues repo-name nil))
-  ([repo-name filters]
-   (if-not (masked-repo? repo-name)
-     (ti/issues org repo-name (into opts filters))
-     (throw (RuntimeException. (str "Invalid repository '" repo-name "'."))))))
+  ([repo-slug] (issues repo-slug nil))
+  ([repo-slug filters]
+  (let [org       (get-repo-org repo-slug)
+        repo-name (get-repo-name repo-slug)]
+    (if-not (masked-repo? repo-slug)
+      (ti/issues org repo-name (into opts filters))
+      (throw (RuntimeException. (str "Invalid repository '" repo-slug "'.")))))))
 
 (defn issue
   "Gets the details of a single issue in the given repo, including comments."
-  [repo-name issue-id]
-  (if-not (masked-repo? repo-name)
-    (assoc (ti/specific-issue org repo-name issue-id opts)
-           :comment_data (ti/issue-comments org repo-name issue-id opts))
-    (throw (RuntimeException. (str "Invalid repository " repo-name)))))
-
+  [repo-slug issue-id]
+  (let [org       (get-repo-org repo-slug)
+        repo-name (get-repo-name repo-slug)]
+    (if-not (masked-repo? repo-slug)
+      (assoc (ti/specific-issue org repo-name issue-id opts)
+             :comment_data (ti/issue-comments org repo-name issue-id opts))
+      (throw (RuntimeException. (str "Invalid repository " repo-slug))))))
 
 (defn add-comment
   "Adds the given content as a comment to the given issue."
-  [repo-name issue-id comment-content]
-  (if-not (masked-repo? repo-name)
-    (ti/create-comment org repo-name issue-id comment-content opts)
-    (throw (RuntimeException. (str "Invalid repository " repo-name)))))
-
+  [repo-slug issue-id comment-content]
+  (let [org       (get-repo-org repo-slug)
+        repo-name (get-repo-name repo-slug)]
+    (if-not (masked-repo? repo-slug)
+      (ti/create-comment org repo-name issue-id comment-content opts)
+      (throw (RuntimeException. (str "Invalid repository " repo-slug))))))

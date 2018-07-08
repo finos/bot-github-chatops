@@ -1,7 +1,7 @@
 [#ftl output_format="HTML" auto_esc=true strip_whitespace=true]
 <messageML>
 [#if success]
-<b>${summary?capitalize} issues in ${repoName}:</b>
+<b>${summary?capitalize} issues in ${repoSlug}:</b>
 <p>
   [#if issues?? && issues?size > 0]
     [#include "issues-summary-table.ftl"]

@@ -15,7 +15,7 @@
   <header>
     <p>
       <div class="${titleBgStyle}"><hr/></div>
-      <b><a href="${issue.html_url}">${repoName} issue #${issue.number} - ${issue.title}</a></b><br/>
+      <b><a href="${issue.html_url}">${repoSlug} issue #${issue.number} - ${issue.title}</a></b><br/>
       <b>State: <span class="${textStyle}">${issue.state}</span></b> ❖
       <b>Type:</b> [#if issue.pull_request??]Pull request[#else]Issue[/#if] ❖
       <b>Created by:</b> <a href="${issue.user.html_url}">${issue.user.login}</a> on ${issue.created_at?datetime.iso?string["yyyy-MM-dd h:mm:ssa z"]} ❖
@@ -25,7 +25,7 @@
 [#if issue.body??]
     <p><b>Description:</b> ${issue.body}</p>
 [/#if]
-    <p><b>Add Comment Command:</b> ac ${repoName} ${issue.number} [COMMENT TEXT HERE]</p>
+    <p><b>Add Comment Command:</b> ac ${repoSlug} ${issue.number} [COMMENT TEXT HERE]</p>
 [#if issue.comments > 0 && issue.comment_data??]
     <p><i>Click to see ${issue.comments} comments</i></p>
 [/#if]
