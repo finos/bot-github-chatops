@@ -32,9 +32,9 @@
                     ]
   :dependencies     [
                       [org.clojure/clojure                       "1.9.0"]
-                      [org.apache.commons/commons-lang3          "3.7"]
+                      [org.apache.commons/commons-lang3          "3.8"]
                       [aero                                      "1.1.3"]
-                      [mount                                     "0.1.12"]
+                      [mount                                     "0.1.13"]
                       [org.clojure/tools.cli                     "0.3.7"]
                       [org.clojure/tools.logging                 "0.4.1"]
                       [org.clojure/core.memoize                  "0.7.1"]
@@ -64,11 +64,11 @@
                       [org.glassfish.jersey.core/jersey-client                      ~jersey-version]
                       [org.glassfish.jersey.core/jersey-common                      ~jersey-version]
                       [org.glassfish.jersey.media/jersey-media-json-jackson         ~jersey-version]
-                      [clj-http                                                     "3.9.0"]
+                      [clj-http                                                     "3.9.1"]
                       [joda-time/joda-time                                          "2.10"]
                       [org.hamcrest/hamcrest-core                                   "1.3"]
                     ]
-  :profiles         {:dev {:dependencies [[midje         "1.9.1"]]
+  :profiles         {:dev {:dependencies [[midje         "1.9.2"]]
                            :plugins      [[lein-midje    "3.2.1"]
                                           [lein-licenses "0.2.2"]]}
                      :uberjar {:aot          :all
