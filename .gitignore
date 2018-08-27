@@ -19,3 +19,10 @@ certs/
 uberjar/
 env.sh
 /resources/deploy-info.edn
+.settings/org.eclipse.m2e.core.prefs
+.classpath
+.project
+repl-test.clj
+.settings/org.eclipse.jdt.apt.core.prefs
+.settings/org.eclipse.jdt.core.prefs
+.vscode
