@@ -16,11 +16,11 @@ As a result, PRs submitted to the bot-github-chatops project cannot be accepted 
 
 ## Prerequisites
 
-* [ ] Have you [searched for duplicates](https://github.com/symphonyoss/bot-github-chatops/issues?utf8=%E2%9C%93&q=)?  A simple search for exception error messages or a summary of the unexpected behaviour should suffice.
-* [ ] Are you running the [latest release of the bot-github-chatops](https://github.com/symphonyoss/bot-github-chatops/commits/master)?
+* [ ] Have you [searched for duplicates](https://github.com/finos-fdx/bot-github-chatops/issues?utf8=%E2%9C%93&q=)?  A simple search for exception error messages or a summary of the unexpected behaviour should suffice.
+* [ ] Are you running the [latest release of the bot-github-chatops](https://github.com/finos-fdx/bot-github-chatops/commits/master)?
 
 ## Raising an Issue
-* Create your issue [here](https://github.com/symphonyoss/bot-github-chatops/issues/new).
+* Create your issue [here](https://github.com/finos-fdx/bot-github-chatops/issues/new).
 * New issues contain two templates in the description: bug report and enhancement request. Please pick the most appropriate for your issue, and delete the other.
   * Please also tag the new issue with either "Bug" or "Enhancement".
 * Please use [Markdown formatting](https://help.github.com/categories/writing-on-github/)
@@ -32,12 +32,12 @@ To make review of PRs easier, please:
 
  * Please make sure your PRs will merge cleanly - PRs that don't are unlikely to be accepted.
  * For code contributions, follow the existing code layout.
- * For documentation contributions, follow the general structure, language, and tone of the [existing docs](https://github.com/symphonyoss/bot-github-chatops/wiki).
+ * For documentation contributions, follow the general structure, language, and tone of the [existing docs](https://github.com/finos-fdx/bot-github-chatops/wiki).
  * Keep commits small and cohesive - if you have multiple contributions, please submit them as independent commits (and ideally as independent PRs too).
  * Reference issue #s if your PR has anything to do with an issue (even if it doesn't address it).
  * Minimise non-functional changes (e.g. whitespace shenanigans).
  * Ensure all new files include a header comment block containing the [Apache License v2.0 and your copyright information](http://www.apache.org/licenses/LICENSE-2.0#apply).
- * If necessary (e.g. due to 3rd party dependency licensing requirements), update the [NOTICE file](https://github.com/symphonyoss/bot-github-chatops/blob/master/NOTICE) with any new attribution or other notices
+ * If necessary (e.g. due to 3rd party dependency licensing requirements), update the [NOTICE file](https://github.com/finos-fdx/bot-github-chatops/blob/master/NOTICE) with any new attribution or other notices
 
 ## Commit and PR Messages
 

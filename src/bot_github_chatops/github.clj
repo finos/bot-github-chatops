@@ -56,13 +56,13 @@
                    (set from-config)))
 
 (defn- get-repo-org
-  "Returns the org of a repo (ie 'symphonyoss', given its slug, ie 'symphonyoss/contrib-toolbox', or nil if the input is nil or blank."
+  "Returns the org of a repo (ie 'finos-fdx', given its slug, ie 'finos-fdx/contrib-toolbox', or nil if the input is nil or blank."
   [repo-slug]
   (if-not (s/blank? repo-slug)
     (first (s/split repo-slug #"/"))))
 
 (defn- get-repo-name
-  "Returns the name of a repo (ie 'contrib-toolbox', given its slug, ie 'symphonyoss/contrib-toolbox'"
+  "Returns the name of a repo (ie 'contrib-toolbox', given its slug, ie 'finos-fdx/contrib-toolbox'"
   [repo-slug]
   (if-not (s/blank? repo-slug)
     (second (s/split repo-slug #"/"))))

@@ -91,7 +91,7 @@
   (s/trim (:hash build-info)))
 
 (def git-url
-  (str "https://github.com/symphonyoss/bot-github-chatops/tree/" git-revision))
+  (str "https://github.com/finos-fdx/bot-github-chatops/tree/" git-revision))
 
 (def build-date
   (tc/from-date (:date build-info)))
