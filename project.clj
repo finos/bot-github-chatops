@@ -32,10 +32,10 @@
                     ]
   :dependencies     [
                       [org.clojure/clojure                       "1.9.0"]
-                      [org.apache.commons/commons-lang3          "3.8"]
+                      [org.apache.commons/commons-lang3          "3.8.1"]
                       [aero                                      "1.1.3"]
                       [mount                                     "0.1.13"]
-                      [org.clojure/tools.cli                     "0.4.0"]
+                      [org.clojure/tools.cli                     "0.4.1"]
                       [org.clojure/tools.logging                 "0.4.1"]
                       [org.clojure/core.memoize                  "0.7.1"]
                       [ch.qos.logback/logback-classic            "1.2.3"]
@@ -48,7 +48,7 @@
                       [com.github.grinnbearit/freemarker-clj     "-SNAPSHOT"]
                       [irresponsible/tentacles                   "0.6.2"]
                       [org.clojars.pmonks/clj-2253               "0.1.0" :exclusions [org.clojure/clojure]]
-                      [org.symphonyoss/clj-symphony              "0.8.0" :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
+                      [org.symphonyoss/clj-symphony              "0.9.0" :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
 
                       ; The following dependencies are inherited but have conflicting versions, so we "pin" the versions here
                       [com.fasterxml.jackson.core/jackson-core                      ~jackson-version]
@@ -73,10 +73,4 @@
                                           [lein-licenses "0.2.2"]]}
                      :uberjar {:aot          :all
                                :uberjar-name "bot-github-chatops-standalone.jar"}}
-  :jvm-opts         ~(let [version     (System/getProperty "java.version")
-                           [major _ _] (clojure.string/split version #"\.")]
-                       (if (>= (java.lang.Integer/parseInt major) 9)
-                         ["--add-modules" "java.xml.bind"]
-                         []))
-  :main             bot-github-chatops.main
-  )
+  :main             bot-github-chatops.main)
