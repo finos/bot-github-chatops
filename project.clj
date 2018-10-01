@@ -47,8 +47,8 @@
                       [clj-time                                  "0.14.4"]
                       [com.github.grinnbearit/freemarker-clj     "-SNAPSHOT"]
                       [irresponsible/tentacles                   "0.6.2"]
-                      [org.clojars.pmonks/clj-2253               "0.1.0" :exclusions [org.clojure/clojure]]
-                      [org.symphonyoss/clj-symphony              "0.9.0" :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
+                      [org.clojars.pmonks/clj-2253               "0.1.0"  :exclusions [org.clojure/clojure]]
+                      [org.symphonyoss/clj-symphony              "0.10.0" :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
 
                       ; The following dependencies are inherited but have conflicting versions, so we "pin" the versions here
                       [com.fasterxml.jackson.core/jackson-core                      ~jackson-version]
