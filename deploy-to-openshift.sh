@@ -9,7 +9,7 @@ if [[ $BRANCH_NAME =~ master ]]; then
 	export SYMPHONY_POD_HOST="foundation.symphony.com"
 	export SYMPHONY_API_HOST="foundation-api.symphony.com"
     export BOT_NAME="bot-github-chatops-prod"
-    export OC_PROJECT_NAME="ssf-prod"
+    export OC_PROJECT_NAME="bot-github-chatops-prod"
     export JOLOKIA_NODE_PORT=30020
 
 elif [[ $BRANCH_NAME =~ dev ]]; then
@@ -18,7 +18,7 @@ elif [[ $BRANCH_NAME =~ dev ]]; then
 	export SYMPHONY_POD_HOST="foundation-dev.symphony.com"
 	export SYMPHONY_API_HOST="foundation-dev-api.symphony.com"
     export BOT_NAME="bot-github-chatops-dev"
-    export OC_PROJECT_NAME="ssf-dev"
+    export OC_PROJECT_NAME="bot-github-chatops-dev"
     export JOLOKIA_NODE_PORT=30021
 else
 	echo "Skipping deployment for branch $BRANCH_NAME"
