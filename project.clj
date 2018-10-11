@@ -44,7 +44,7 @@
                       [org.slf4j/jul-to-slf4j                    "1.7.25"]
                       [org.jolokia/jolokia-jvm                   "1.6.0"]
                       [org.jolokia/jolokia-jvm                   "1.6.0" :classifier "agent"]
-                      [clj-time                                  "0.14.4"]
+                      [clj-time                                  "0.14.5"]
                       [com.github.grinnbearit/freemarker-clj     "-SNAPSHOT"]
                       [irresponsible/tentacles                   "0.6.2"]
                       [org.clojars.pmonks/clj-2253               "0.1.0"  :exclusions [org.clojure/clojure]]
@@ -68,7 +68,7 @@
                       [joda-time/joda-time                                          "2.10"]
                       [org.hamcrest/hamcrest-core                                   "1.3"]
                     ]
-  :profiles         {:dev {:dependencies [[midje         "1.9.2"]]
+  :profiles         {:dev {:dependencies [[midje         "1.9.3"]]
                            :plugins      [[lein-midje    "3.2.1"]
                                           [lein-licenses "0.2.2"]]}
                      :uberjar {:aot          :all
