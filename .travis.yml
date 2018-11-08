@@ -35,5 +35,5 @@ deploy:
     skip_cleanup: true
     script: lein pom && mvn org.whitesource:whitesource\-maven\-plugin:18.6.2:update -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN -Dorg.whitesource.ignoredScopes=test,runtime,provided,system
     on:
-      branch: master
+      condition: $TRAVIS_BRANCH -eq "master" || $TRAVIS_BRANCH -eq "dev"
       jdk: openjdk11
