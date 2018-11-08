@@ -33,7 +33,15 @@ deploy:
   # Update Whitesource
   - provider: script
     skip_cleanup: true
-    script: lein pom && mvn org.whitesource:whitesource\-maven\-plugin:18.6.2:update -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN -Dorg.whitesource.ignoredScopes=test,runtime,provided,system -DfailOnError=true
+    script: >
+      lein pom &&
+      mvn org.whitesource:whitesource\-maven\-plugin:18.6.2:update
+      -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN
+      -Dorg.whitesource.ignoredScopes=test,runtime,provided,system &&
+      mvn org.whitesource:whitesource\-maven\-plugin:18.6.2:check-policies
+      -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN
+      -Dorg.whitesource.ignoredScopes=test,runtime,provided,system
+      -DfailOnError=true
     on:
       all_branches: true
       condition: $TRAVIS_BRANCH -eq "master" || $TRAVIS_BRANCH -eq "dev"
