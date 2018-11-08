@@ -38,7 +38,7 @@ deploy:
       mvn org.whitesource:whitesource\-maven\-plugin:18.6.2:update
       -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN
       -Dorg.whitesource.ignoredScopes=test,runtime,provided,system &&
-      mvn org.whitesource:whitesource\-maven\-plugin:18.6.2:check-policies
+      mvn org.whitesource:whitesource\-maven\-plugin:18.6.2:checkPolicies
       -Dorg.whitesource.orgToken=$WHITESOURCE_TOKEN
       -Dorg.whitesource.ignoredScopes=test,runtime,provided,system
       -DfailOnError=true
