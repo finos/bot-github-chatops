@@ -6,6 +6,11 @@ jdk:
   - openjdk10   # TravisCI deprecated their Oracle JDK 10 image, annoyingly...
   - openjdk11   # Don't fall for Oracle's trick: https://blog.joda.org/2018/09/do-not-fall-into-oracles-java-11-trap.html
 
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2
+
 env:
  global:
   # Encrypted WHITESOURCE_TOKEN for updating Whitesource licensing information
