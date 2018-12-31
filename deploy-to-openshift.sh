@@ -11,6 +11,7 @@ if [[ $BRANCH_NAME =~ master ]]; then
     export BOT_NAME="bot-github-chatops-prod"
     export OC_PROJECT_NAME="bot-github-chatops-prod"
     export JOLOKIA_NODE_PORT=30020
+    export OC_TOKEN_FILE=token-github-chatops-prod.txt
 
 elif [[ $BRANCH_NAME =~ dev ]]; then
 	# Reset Openshift env on every build, for testing purposes
@@ -20,6 +21,7 @@ elif [[ $BRANCH_NAME =~ dev ]]; then
     export BOT_NAME="bot-github-chatops-dev"
     export OC_PROJECT_NAME="bot-github-chatops-dev"
     export JOLOKIA_NODE_PORT=30021
+    export OC_TOKEN_FILE=token-github-chatops-dev.txt
 else
 	echo "Skipping deployment for branch $BRANCH_NAME"
 	exit 0
