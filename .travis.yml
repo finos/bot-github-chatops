@@ -45,6 +45,5 @@ deploy:
       -Dorg.whitesource.checkPolicies=true
       -Dorg.whitesource.forceCheckAllDependencies=true
     on:
-      all_branches: true
-      condition: $TRAVIS_BRANCH -eq "master" || $TRAVIS_BRANCH -eq "dev"
+      branch: master
       jdk: openjdk11
