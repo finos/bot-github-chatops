@@ -3,7 +3,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/finos-fdx/bot-github-chatops.svg)](http://isitmaintained.com/project/finos-fdx/bot-github-chatops "Average time to resolve an issue")
 [![Dependencies Status](https://versions.deps.co/finos-fdx/bot-github-chatops/status.svg)](https://versions.deps.co/finos-fdx/bot-github-chatops)
 [![License](https://img.shields.io/github/license/finos-fdx/bot-github-chatops.svg)](https://github.com/finos-fdx/bot-github-chatops/blob/master/LICENSE)
-[![FINOS - Incubating](https://cdn.rawgit.com/finos/contrib-toolbox/master/images/badge-incubating.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Incubating)
+[![FINOS - Incubating](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-incubating.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Incubating)
 
 <img align="right" width="40%" src="https://www.finos.org/hubfs/FINOS/finos-logo/FINOS_Icon_Wordmark_Name_RGB_horizontal.png">
 
@@ -44,10 +44,19 @@ The bot will provide you with help by asking it for `help`:
 
 [Issue Tracker](https://github.com/finos-fdx/bot-github-chatops/issues)
 
+## Contributing
+
+1. Fork it (<https://github.com/finos-fdx/bot-github-chatops/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Read our [contribution guidelines](.github/CONTRIBUTING.md) and [Community Code of Conduct](https://www.finos.org/code-of-conduct)
+4. Commit your changes (`git commit -am 'Add some fooBar'`)
+5. Push to the branch (`git push origin feature/fooBar`)
+6. Create a new Pull Request
+
 ## License
 
-Copyright 2017 Fintech Open Source Foundation
-
-Distributed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+The code in this repository is distributed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 SPDX-License-Identifier: [Apache-2.0](https://spdx.org/licenses/Apache-2.0)
+
+Copyright 2017-2019 Fintech Open Source Foundation
