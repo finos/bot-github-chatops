@@ -31,7 +31,7 @@
                       [org.noisesmith/git-info-edn "0.2.1"]
                     ]
   :dependencies     [
-                      [org.clojure/clojure                       "1.10.0"]
+                      [org.clojure/clojure                       "1.10.1"]
                       [org.apache.commons/commons-lang3          "3.9"]
                       [aero                                      "1.1.3"]
                       [mount                                     "0.1.16"]
