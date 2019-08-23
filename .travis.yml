@@ -1,8 +1,8 @@
 language: clojure
 lein: 2.8.1
-jdk:
-  - openjdk8    # oraclejdk8 no longer supported by TravisCI (or Oracle)
-  - openjdk11   # Don't fall for Oracle's trick: https://blog.joda.org/2018/09/do-not-fall-into-oracles-java-11-trap.html
+# jdk:
+#   - openjdk8    # oraclejdk8 no longer supported by TravisCI (or Oracle)
+#   - openjdk11   # Don't fall for Oracle's trick: https://blog.joda.org/2018/09/do-not-fall-into-oracles-java-11-trap.html
 
 cache:
   directories:
@@ -43,4 +43,4 @@ deploy:
       -Dorg.whitesource.forceCheckAllDependencies=true
     on:
       branch: master
-      jdk: openjdk11
+      # jdk: openjdk11
