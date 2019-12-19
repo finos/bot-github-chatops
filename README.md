@@ -51,7 +51,7 @@ The bot will provide you with help by asking it for `help`:
 3. Read our [contribution guidelines](.github/CONTRIBUTING.md) and [Community Code of Conduct](https://www.finos.org/code-of-conduct)
 4. Commit your changes (`git commit -am 'Add some fooBar'`)
 5. Push to the branch (`git push origin feature/fooBar`)
-6. Create a new Pull Request
+6. Create a new Pull Request, against the `dev` branch (note that PRs against `master` will be automatically rejected - all changes must come through `dev` for testing first)
 
 ## License
 
