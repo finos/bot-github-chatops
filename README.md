@@ -1,9 +1,12 @@
+| NOTE! This project is not active anymore, therefore marked as ARCHIVED; if you're interested to become the maintener of this project, open an issue or email help@finos.org |
+| --- |
+
 [![Build Status](https://travis-ci.org/finos-fdx/bot-github-chatops.svg?branch=master)](https://travis-ci.org/finos-fdx/bot-github-chatops)
 [![Open Issues](https://img.shields.io/github/issues/finos-fdx/bot-github-chatops.svg)](https://github.com/finos-fdx/bot-github-chatops/issues)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/finos-fdx/bot-github-chatops.svg)](http://isitmaintained.com/project/finos-fdx/bot-github-chatops "Average time to resolve an issue")
 [![Dependencies Status](https://versions.deps.co/finos-fdx/bot-github-chatops/status.svg)](https://versions.deps.co/finos-fdx/bot-github-chatops)
 [![License](https://img.shields.io/github/license/finos-fdx/bot-github-chatops.svg)](https://github.com/finos-fdx/bot-github-chatops/blob/master/LICENSE)
-[![FINOS - Incubating](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-incubating.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Incubating)
+[![FINOS - Archived](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-archived.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Archived)
 
 <img align="right" width="40%" src="https://www.finos.org/hubfs/FINOS/finos-logo/FINOS_Icon_Wordmark_Name_RGB_horizontal.png">
 
