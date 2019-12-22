@@ -3,7 +3,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/finos/bot-github-chatops.svg)](http://isitmaintained.com/project/finos/bot-github-chatops "Average time to resolve an issue")
 [![Dependencies Status](https://versions.deps.co/finos/bot-github-chatops/status.svg)](https://versions.deps.co/finos/bot-github-chatops)
 [![License](https://img.shields.io/github/license/finos/bot-github-chatops.svg)](https://github.com/finos/bot-github-chatops/blob/master/LICENSE)
-[![FINOS - Incubating](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-incubating.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Incubating)
+[![FINOS - Archived](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-archived.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Archived)
 
 <img align="right" width="40%" src="https://www.finos.org/hubfs/FINOS/finos-logo/FINOS_Icon_Wordmark_Name_RGB_horizontal.png">
 
