@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/finos-fdx/bot-github-chatops.svg?branch=master)](https://travis-ci.org/finos-fdx/bot-github-chatops)
-[![Open Issues](https://img.shields.io/github/issues/finos-fdx/bot-github-chatops.svg)](https://github.com/finos-fdx/bot-github-chatops/issues)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/finos-fdx/bot-github-chatops.svg)](http://isitmaintained.com/project/finos-fdx/bot-github-chatops "Average time to resolve an issue")
-[![Dependencies Status](https://versions.deps.co/finos-fdx/bot-github-chatops/status.svg)](https://versions.deps.co/finos-fdx/bot-github-chatops)
-[![License](https://img.shields.io/github/license/finos-fdx/bot-github-chatops.svg)](https://github.com/finos-fdx/bot-github-chatops/blob/master/LICENSE)
-[![FINOS - Incubating](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-incubating.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Incubating)
+[![Build Status](https://travis-ci.org/finos/bot-github-chatops.svg?branch=master)](https://travis-ci.org/finos-/bot-github-chatops)
+[![Open Issues](https://img.shields.io/github/issues/finos/bot-github-chatops.svg)](https://github.com/finos/bot-github-chatops/issues)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/finos/bot-github-chatops.svg)](http://isitmaintained.com/project/finos/bot-github-chatops "Average time to resolve an issue")
+[![Dependencies Status](https://versions.deps.co/finos/bot-github-chatops/status.svg)](https://versions.deps.co/finos/bot-github-chatops)
+[![License](https://img.shields.io/github/license/finos/bot-github-chatops.svg)](https://github.com/finos/bot-github-chatops/blob/master/LICENSE)
+[![FINOS - Archived](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-archived.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Archived)
 
 <img align="right" width="40%" src="https://www.finos.org/hubfs/FINOS/finos-logo/FINOS_Icon_Wordmark_Name_RGB_horizontal.png">
 
@@ -15,11 +15,11 @@ CLI-esque interactions with the bot.
 
 ## Current Status
 
-The [MVP](https://github.com/finos-fdx/bot-github-chatops/projects/1) is effectively complete, and the bot has been
+The [MVP](https://github.com/finos/bot-github-chatops/projects/1) is effectively complete, and the bot has been
 deployed on a pre-production basis to the Foundation's production pod, with cross-pod enabled so that you can interact
 with it from any cross-pod enabled Symphony account.
 
-[Feedback, comments, bug reports & enhancement requests are all welcome!](https://github.com/finos-fdx/bot-github-chatops/issues)
+[Feedback, comments, bug reports & enhancement requests are all welcome!](https://github.com/finos/bot-github-chatops/issues)
 
 ## Installation
 
@@ -35,23 +35,23 @@ to the bot, you may [chat with the bot here](https://my.symphony.com/?embed/&mod
 The bot will provide you with help by asking it for `help`:
 
 <p align="center">
-  <img width="500px" alt="GitHub ChatOps bot help" src="https://raw.githubusercontent.com/finos-fdx/bot-github-chatops/master/bot-github-chatops-example.png"/>
+  <img width="500px" alt="GitHub ChatOps bot help" src="https://raw.githubusercontent.com/finos/bot-github-chatops/master/bot-github-chatops-example.png"/>
 </p>
 
 ## Developer Information
 
-[GitHub project](https://github.com/finos-fdx/bot-github-chatops)
+[GitHub project](https://github.com/finos/bot-github-chatops)
 
-[Issue Tracker](https://github.com/finos-fdx/bot-github-chatops/issues)
+[Issue Tracker](https://github.com/finos/bot-github-chatops/issues)
 
 ## Contributing
 
-1. Fork it (<https://github.com/finos-fdx/bot-github-chatops/fork>)
+1. Fork it (<https://github.com/finos/bot-github-chatops/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Read our [contribution guidelines](.github/CONTRIBUTING.md) and [Community Code of Conduct](https://www.finos.org/code-of-conduct)
 4. Commit your changes (`git commit -am 'Add some fooBar'`)
 5. Push to the branch (`git push origin feature/fooBar`)
-6. Create a new Pull Request
+6. Create a new Pull Request, against the `dev` branch (note that PRs against `master` will be automatically rejected - all changes must come through `dev` for testing first)
 
 _NOTE:_ Commits and pull requests to FINOS repositories will only be accepted from those contributors with an active, executed Individual Contributor License Agreement (ICLA) with FINOS OR who are covered under an existing and active Corporate Contribution License Agreement (CCLA) executed with FINOS. Commits from individuals not covered under an ICLA or CCLA will be flagged and blocked by the FINOS Clabot tool. Please note that some CCLAs require individuals/employees to be explicitly named on the CCLA.
 
