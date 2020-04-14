@@ -24,4 +24,4 @@ deploy:
     on:
       all_branches: true
       condition: $TRAVIS_BRANCH -eq "master" || $TRAVIS_BRANCH -eq "dev"
-      jdk: openjdk11
+      # jdk: openjdk11
