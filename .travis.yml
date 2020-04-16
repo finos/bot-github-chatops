@@ -11,7 +11,7 @@ cache:
 
 # Workaround for TravisCI's garbage openjdk10 base image
 before_install:
-  - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then openssl aes-256-cbc -K $encrypted_a441ddcda54c_key -iv $encrypted_a441ddcda54c_iv -in tokens.tar.enc -out tokens.tar -d ; tar xvf tokens.tar; fi
+  - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then openssl aes-256-cbc -K $encrypted_4182063627e7_key -iv $encrypted_4182063627e7_iv -in tokens.tar.enc -out tokens.tar -d ; tar xvf tokens.tar; fi
   - if [[ $JAVA_HOME == *openjdk10* ]]; then rm "${JAVA_HOME}/lib/security/cacerts"; ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"; fi
 
 script: lein do git-info-edn, version, check
@@ -24,4 +24,3 @@ deploy:
     on:
       all_branches: true
       condition: $TRAVIS_BRANCH -eq "master" || $TRAVIS_BRANCH -eq "dev"
-      # jdk: openjdk11
