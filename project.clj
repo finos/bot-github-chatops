@@ -28,7 +28,7 @@
   :repositories     [["sonatype-snapshots" {:url "https://oss.sonatype.org/content/groups/public" :snapshots true}]
                      ["jitpack"            {:url "https://jitpack.io"                             :snapshots true}]]
   :plugins          [
-                      [org.noisesmith/git-info-edn "0.2.1"]
+                      [org.noisesmith/git-info-edn "0.2.2"]
                     ]
   :dependencies     [
                       [org.clojure/clojure                       "1.10.1"]
