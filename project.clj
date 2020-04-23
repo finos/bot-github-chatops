@@ -37,7 +37,7 @@
                       [mount                                     "0.1.16"]
                       [org.clojure/tools.cli                     "1.0.194"]
                       [org.clojure/tools.logging                 "1.0.0"]
-                      [org.clojure/core.memoize                  "0.8.2"]
+                      [org.clojure/core.memoize                  "1.0.236"]
                       [ch.qos.logback/logback-classic            "1.2.3"]
                       [org.slf4j/jcl-over-slf4j                  "1.7.30"]
                       [org.slf4j/log4j-over-slf4j                "1.7.30"]
@@ -49,7 +49,7 @@
                       [irresponsible/tentacles                   "0.6.6" :exclusions [pathetic]]
                       [pathetic                                  "0.5.1"]
                       [org.clojars.pmonks/clj-2253               "0.1.0" :exclusions [org.clojure/clojure]]
-                      [org.symphonyoss/clj-symphony              "1.0.0" :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
+                      [org.symphonyoss/clj-symphony              "1.0.1" :exclusions [org.clojure/clojure org.slf4j/slf4j-log4j12]]
 
                       ; The following dependencies are inherited but have conflicting versions, so we "pin" the versions here
                       [com.fasterxml.jackson.core/jackson-core                      ~jackson-version]
@@ -65,7 +65,7 @@
                       [org.glassfish.jersey.core/jersey-client                      ~jersey-version]
                       [org.glassfish.jersey.core/jersey-common                      ~jersey-version]
                       [org.glassfish.jersey.media/jersey-media-json-jackson         ~jersey-version]
-                      [clj-http                                                     "3.10.0"]
+                      [clj-http                                                     "3.10.1"]
                       [joda-time/joda-time                                          "2.10.5"]
                       [org.hamcrest/hamcrest-core                                   "2.2"]
                     ]
